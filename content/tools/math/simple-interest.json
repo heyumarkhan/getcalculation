@@ -1,0 +1,14 @@
+{
+  "toolName": "Simple Interest Calculator",
+  "toolSlug": "simple-interest",
+  "categorySlug": "math",
+  "description": "Calculate the simple interest on a loan or principal amount.",
+  "calculationLogic": "SIMPLE_INTEREST_V1",
+  "parameters": [
+    { "name": "principal", "label": "Principal Amount", "type": "number", "unit": "$" },
+    { "name": "rate", "label": "Annual Interest Rate", "type": "number", "unit": "%" },
+    { "name": "time", "label": "Time Period", "type": "number", "unit": "years" }
+  ],
+  "outputs": [{ "name": "interest", "label": "Total Interest", "type": "number", "precision": 2, "unit": "$" }],
+  "pSEODataset": "/datasets/math/simple-interest-data.csv"
+}

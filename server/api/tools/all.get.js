@@ -1,7 +1,8 @@
+// REPLACEMENT CODE for /server/api/tools/all.get.js
+
 import { promises as fs } from 'fs';
 import path from 'path';
 
-// This is a helper function that will recursively read directories.
 async function readToolManifests(dir) {
   let allTools = [];
   const items = await fs.readdir(dir, { withFileTypes: true });
@@ -9,13 +10,19 @@ async function readToolManifests(dir) {
   for (const item of items) {
     const fullPath = path.join(dir, item.name);
     if (item.isDirectory()) {
-      // If it's a directory, read its contents recursively.
       const nestedTools = await readToolManifests(fullPath);
       allTools = allTools.concat(nestedTools);
     } else if (item.isFile() && item.name.endsWith('.json')) {
-      // If it's a JSON file, read and parse it.
       const fileContent = await fs.readFile(fullPath, 'utf-8');
-      allTools.push(JSON.parse(fileContent));
+      try {
+        // We add a specific try...catch here for parsing
+        allTools.push(JSON.parse(fileContent));
+      } catch (jsonError) {
+        // This will give a much more helpful error message in your terminal
+        console.error(`Error parsing JSON in file: ${fullPath}`, jsonError);
+        // We re-throw the error to be caught by the main handler
+        throw jsonError;
+      }
     }
   }
   return allTools;
@@ -27,10 +34,11 @@ export default defineEventHandler(async () => {
     const allToolManifests = await readToolManifests(toolsDir);
     return allToolManifests;
   } catch (error) {
-    console.error('Failed to read tool manifests:', error);
+    // This console.error is the most important debugging tool you have
+    console.error('Failed to read tool manifests:', error.message);
     throw createError({
       statusCode: 500,
-      statusMessage: 'Could not load tool information.',
+      statusMessage: 'Could not load tool information. Check server logs for details.',
     });
   }
 });
