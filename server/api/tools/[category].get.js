@@ -1,29 +1,40 @@
-import { promises as fs } from 'fs';
-import path from 'path';
+import { useStorage } from '#imports';
 
 export default defineEventHandler(async (event) => {
   const { category } = event.context.params;
 
-  // Sanitize input to prevent accessing unintended directories
-  const safeCategory = path.normalize(category).replace(/^(\.\.(\/|\\|$))+/, '');
-  const categoryDir = path.join(process.cwd(), 'content', 'tools', safeCategory);
+  // This is the key for the directory we want to read inside server/assets.
+  // Note the use of colons ':' as path separators for the storage API.
+  const storageKey = `content:tools:${category}`;
 
   try {
-    const files = await fs.readdir(categoryDir);
-    const toolManifests = [];
+    // 'getKeys' retrieves all file paths within the specified directory.
+    const toolManifestKeys = await useStorage('assets:server').getKeys(storageKey);
 
-    for (const file of files) {
-      if (file.endsWith('.json')) {
-        const filePath = path.join(categoryDir, file);
-        const fileContent = await fs.readFile(filePath, 'utf-8');
-        toolManifests.push(JSON.parse(fileContent));
-      }
+    // If no keys are found, the directory is empty or doesn't exist.
+    if (!toolManifestKeys || toolManifestKeys.length === 0) {
+      return []; // Return an empty array for a valid but empty category.
     }
-    return toolManifests;
+
+    // Process all found keys concurrently.
+    const categoryTools = await Promise.all(
+      toolManifestKeys
+        // Ensure we only process .json files.
+        .filter(key => key.endsWith('.json'))
+        // For each valid key, retrieve its full JSON content.
+        .map(async (key) => {
+          return await useStorage('assets:server').getItem(key);
+        })
+    );
+
+    return categoryTools;
+
   } catch (error) {
+    // This will catch errors if the base storage itself is misconfigured.
+    console.error(`Error accessing storage for category '${category}':`, error);
     throw createError({
-      statusCode: 404,
-      statusMessage: `Tools for category '${safeCategory}' not found.`,
+      statusCode: 500,
+      statusMessage: `Could not retrieve tools for category '${category}'.`,
     });
   }
 });

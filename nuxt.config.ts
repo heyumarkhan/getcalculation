@@ -2,27 +2,32 @@ import { promises as fs } from 'fs';
 import path from 'path';
 import Papa from 'papaparse';
 
-// https://nuxt.com/docs/api/configuration/nuxt-config
-export default defineNuxtConfig({
-  compatibilityDate: '2025-07-15',
-  devtools: { enabled: true }, // CORRECTED: Added a comma here to separate object properties.
+// NOTE: The import for 'useStorage' has been removed as it's not used here.
 
-  // CORRECTED: The 'hooks' object is now correctly defined as a key-value pair within the main config object.
+export default defineNuxtConfig({
+  devtools: { enabled: true },
+  
   hooks: {
     async 'nitro:config'(nitroConfig) {
-      // Ensure prerender routes array exists
-      if (nitroConfig.prerender) {
-        if (!nitroConfig.prerender.routes) {
-          nitroConfig.prerender.routes = [];
-        }
-      } else {
-        return; // Exit if not in a prerender/build context
-      }
+      if (!nitroConfig.prerender) { return; }
 
-      const allTools = [];
-      const toolsDir = path.join(process.cwd(), 'content', 'tools');
+      // --- CRITICAL CORRECTION ---
+      // Reverting to Node.js 'fs' for file access within the build hook context.
+      // We now point it to the new, correct location inside '/server/assets/'.
+      const contentRoot = path.join(__dirname, 'server', 'assets', 'content');
+      const toolsDir = path.join(contentRoot, 'tools');
       
-      async function findTools(dir) {
+      const allTools = [];
+
+      // Using the same reliable file-reading function as before.
+      async function findTools(dir: string) {
+        try {
+          await fs.access(dir);
+        } catch (error) {
+          console.error(`[pSEO] Error: Directory not found at ${dir}`);
+          return;
+        }
+
         const items = await fs.readdir(dir, { withFileTypes: true });
         for (const item of items) {
           const fullPath = path.join(dir, item.name);
@@ -38,30 +43,28 @@ export default defineNuxtConfig({
       await findTools(toolsDir);
       
       for (const tool of allTools) {
-        if (!tool.pSEODataset) continue; // Skip if a tool has no pSEO dataset
-
-        const csvPath = path.join(process.cwd(), 'content', tool.pSEODataset);
+        // Construct the path to the CSV using the correct content root.
+        const csvPath = path.join(contentRoot, tool.pSEODataset);
         try {
           const csvFile = await fs.readFile(csvPath, 'utf-8');
-          const parsed = Papa.parse(csvFile, { header: true, skipEmptyLines: true });
+          const parsed = Papa.parse(csvFile, { header: true });
           
           for (const row of parsed.data) {
-            const slugParts = tool.parameters.map(p => row[p.name]);
-
-            // Ensure all parts of the slug are present before creating it
-            if (slugParts.every(part => part !== undefined && part !== null && part !== '')) {
-              const slug = slugParts.join('-');
+            const slug = tool.parameters
+              .map(p => `${p.name}-${row[p.name]}`)
+              .join('-');
+            
+            if (slug && slug.length > tool.parameters.length) {
               const route = `/${tool.categorySlug}/${tool.toolSlug}/${slug}`;
-              nitroConfig.prerender.routes.push(route);
+              if (!nitroConfig.prerender.routes.includes(route)) {
+                nitroConfig.prerender.routes.push(route);
+              }
             }
           }
         } catch (e) {
-          // Check if the error is because the file doesn't exist, which can be normal.
-          if (e.code !== 'ENOENT') {
-            console.warn(`Could not parse CSV for ${tool.toolName}: ${csvPath}`, e.message);
-          }
+          console.warn(`[pSEO] Could not find or parse CSV for ${tool.toolName} at path: ${csvPath}`);
         }
       }
     },
   },
-})
+});
