@@ -1,0 +1,12 @@
+Gemini conversation link: https://gemini.google.com/u/1/gem/85c1cf505ea5/b44d9e631558a1f2
+
+I have run these commands:
+
+git init
+git add .
+git commit -m "Initial commit: Nuxt.js starter project"
+npm run dev
+
+Maybe I have to run npm run dev again to 'serve' the project
+
+Start from above step
