@@ -3,7 +3,7 @@
 // manifests to an actual, secure function here in our code.
 const calculationLibrary = new Map([
   [
-    'SIMPLE_INTEREST_V1', // This key MUST match the 'calculationLogic' in simple-interest.json
+    'SIMPLE_INTEREST',
     ({ principal, rate, time }) => {
       // Formula: Interest = Principal * (Rate / 100) * Time
       const result = principal * (rate / 100) * time;
@@ -12,7 +12,7 @@ const calculationLibrary = new Map([
     }
   ],
   [
-    'VELOCITY_V1', // This key MUST match the 'calculationLogic' in velocity-calculator.json
+    'VELOCITY',
     ({ distance, time }) => {
       if (time === 0) {
         return { error: 'Time cannot be zero.' };
@@ -20,6 +20,17 @@ const calculationLibrary = new Map([
       // Formula: Velocity = Distance / Time
       const result = distance / time;
       return { velocity: result };
+    }
+  ],
+  [
+    'DECIMAL_TO_PERCENT', 
+    ({ decimal }) => {
+      if (decimal === null || decimal === undefined) {
+        return { error: 'Decimal number is required.' };
+      }
+      // Formula: Percent = Decimal × 100
+      const result = decimal * 100;
+      return { percent: result };
     }
   ]
 ]);

@@ -3,7 +3,7 @@
   "toolSlug": "velocity-calculator",
   "categorySlug": "physics",
   "description": "Calculate velocity based on distance and time.",
-  "calculationLogic": "VELOCITY_V1",
+  "calculationLogic": "VELOCITY",
   "parameters": [
     { "name": "distance", "label": "Distance", "type": "number", "unit": "meters" },
     { "name": "time", "label": "Time", "type": "number", "unit": "seconds" }

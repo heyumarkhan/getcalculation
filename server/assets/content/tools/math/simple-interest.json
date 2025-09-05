@@ -3,7 +3,7 @@
   "toolSlug": "simple-interest",
   "categorySlug": "math",
   "description": "Calculate the simple interest on a loan or principal amount.",
-  "calculationLogic": "SIMPLE_INTEREST_V1",
+  "calculationLogic": "SIMPLE_INTEREST",
   "parameters": [
     { "name": "principal", "label": "Principal Amount", "type": "number", "unit": "$" },
     { "name": "rate", "label": "Annual Interest Rate", "type": "number", "unit": "%" },

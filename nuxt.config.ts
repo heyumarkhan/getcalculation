@@ -6,6 +6,13 @@ import Papa from 'papaparse';
 
 export default defineNuxtConfig({
   devtools: { enabled: true },
+  compatibilityDate: '2025-09-05',
+  
+  // CSS Configuration
+  css: ['~/assets/css/main.css'],
+  
+  // Tailwind CSS Configuration
+  modules: ['@nuxtjs/tailwindcss'],
   
   hooks: {
     async 'nitro:config'(nitroConfig) {

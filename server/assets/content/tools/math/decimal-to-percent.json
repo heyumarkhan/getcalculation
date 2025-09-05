@@ -1,0 +1,14 @@
+{
+  "toolName": "Decimal to Percent Calculator",
+  "toolSlug": "decimal-to-percent",
+  "categorySlug": "math",
+  "description": "Convert decimal numbers to percentage format quickly and accurately.",
+  "calculationLogic": "DECIMAL_TO_PERCENT",
+  "parameters": [
+    { "name": "decimal", "label": "Decimal Number", "type": "number", "unit": "" }
+  ],
+  "outputs": [
+    { "name": "percent", "label": "Percentage", "type": "number", "precision": 2, "unit": "%" }
+  ],
+  "pSEODataset": "/datasets/math/decimal-to-percent-data.csv"
+}
