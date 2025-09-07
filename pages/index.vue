@@ -81,7 +81,7 @@ const getCategoryIconClass = (categorySlug) => {
       <section v-if="searchQuery" class="animate-fade-in">
         <div class="mb-8">
           <h2 class="text-3xl font-semibold text-primary-800 mb-2">
-            Search Results
+            Search Results Are:
           </h2>
           <p class="text-neutral-600">
             Found {{ filteredTools.length }} calculator{{ filteredTools.length !== 1 ? 's' : '' }} for "{{ searchQuery }}"

@@ -1,0 +1,11 @@
+{
+  "name": "BMI Calculator",
+  "description": "Calculates Body Mass Index (BMI) using weight (kg) and height (m).",
+  "category": "physics",
+  "slug": "bmi-calculator",
+  "inputs": [
+    { "name": "weight", "type": "number", "unit": "kg", "required": true },
+    { "name": "height", "type": "number", "unit": "m", "required": true }
+  ],
+  "output": { "name": "bmi", "type": "number" }
+}
