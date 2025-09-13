@@ -32,6 +32,17 @@ const calculationLibrary = new Map([
       const result = decimal * 100;
       return { percent: result };
     }
+  ],
+  [
+    'BMI_CALCULATOR',
+    ({ weight, height }) => {
+      if (weight <= 0 || height <= 0) {
+        return { error: 'Weight and height must be greater than zero.' };
+      }
+      // Formula: BMI = Weight (kg) / Height (m)²
+      const result = weight / (height * height);
+      return { bmi: result };
+    }
   ]
 ]);
 
@@ -59,5 +70,13 @@ export default defineEventHandler(async (event) => {
 
   // Run the found function with the user's data and return the result.
   // The result will be sent back to the frontend as JSON.
-  return calculate(body.inputs);
+  try {
+    return calculate(body.inputs);
+  } catch (error) {
+    console.error('Calculation error:', error);
+    throw createError({ 
+      statusCode: 500, 
+      statusMessage: `Calculation failed: ${error.message}` 
+    });
+  }
 });

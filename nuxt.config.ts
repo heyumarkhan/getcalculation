@@ -1,6 +1,11 @@
 import { promises as fs } from 'fs';
 import path from 'path';
+import { fileURLToPath } from 'url';
 import Papa from 'papaparse';
+
+// Get __dirname equivalent for ES modules
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 // NOTE: The import for 'useStorage' has been removed as it's not used here.
 

@@ -31,17 +31,7 @@ A modern, SEO-optimized calculator platform built with Nuxt.js that provides ins
 - **Smooth Animations**: Hover effects and transitions
 - **Accessibility**: Built with modern web standards
 
-## 🧮 Available Calculators
 
-### Mathematics
-- **Simple Interest Calculator**: Calculate interest on loans and investments
-  - Formula: `Interest = Principal × (Rate/100) × Time`
-
-### Physics
-- **Velocity Calculator**: Calculate velocity from distance and time
-  - Formula: `Velocity = Distance / Time`
-
-*More calculators coming soon!*
 
 ## 🚀 Quick Start
 
