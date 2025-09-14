@@ -1,0 +1,272 @@
+{
+  "toolName": "Slope Calculator (Using Gradient)",
+  "toolSlug": "slope-calculator",
+  "categorySlug": "math",
+  "description": "Calculate the slope (gradient) of a line passing through two points using the slope formula. Find rise over run, angle of inclination, and line properties.",
+  "calculationLogic": "SLOPE_CALCULATOR",
+  
+  "sections": [
+    {
+      "id": "point-coordinates",
+      "title": "Point Coordinates",
+      "description": "Enter the coordinates for both points to calculate the slope between them",
+      "required": true,
+      "order": 1,
+      "collapsible": false,
+      "fields": [
+        {
+          "name": "x1",
+          "label": "Point 1 - X Coordinate",
+          "type": "number",
+          "required": true,
+          "step": 0.001,
+          "placeholder": "Enter x₁ coordinate",
+          "unit": "",
+          "validation": {
+            "message": "X₁ coordinate must be a valid number"
+          },
+          "helpText": "The x-coordinate of the first point (x₁, y₁)"
+        },
+        {
+          "name": "y1",
+          "label": "Point 1 - Y Coordinate",
+          "type": "number",
+          "required": true,
+          "step": 0.001,
+          "placeholder": "Enter y₁ coordinate",
+          "unit": "",
+          "validation": {
+            "message": "Y₁ coordinate must be a valid number"
+          },
+          "helpText": "The y-coordinate of the first point (x₁, y₁)"
+        },
+        {
+          "name": "x2",
+          "label": "Point 2 - X Coordinate",
+          "type": "number",
+          "required": true,
+          "step": 0.001,
+          "placeholder": "Enter x₂ coordinate",
+          "unit": "",
+          "validation": {
+            "message": "X₂ coordinate must be a valid number"
+          },
+          "helpText": "The x-coordinate of the second point (x₂, y₂)"
+        },
+        {
+          "name": "y2",
+          "label": "Point 2 - Y Coordinate",
+          "type": "number",
+          "required": true,
+          "step": 0.001,
+          "placeholder": "Enter y₂ coordinate",
+          "unit": "",
+          "validation": {
+            "message": "Y₂ coordinate must be a valid number"
+          },
+          "helpText": "The y-coordinate of the second point (x₂, y₂)"
+        }
+      ]
+    }
+  ],
+  
+  "outputs": [
+    {
+      "name": "slope",
+      "label": "Slope (Gradient)",
+      "type": "number",
+      "precision": 6,
+      "unit": "",
+      "section": "primary",
+      "description": "The slope of the line passing through the two points"
+    },
+    {
+      "name": "slopeAsRatio",
+      "label": "Slope as Ratio",
+      "type": "text",
+      "section": "primary",
+      "description": "The slope expressed as rise over run"
+    },
+    {
+      "name": "angleInDegrees",
+      "label": "Angle of Inclination (°)",
+      "type": "number",
+      "precision": 6,
+      "unit": "°",
+      "section": "primary",
+      "description": "The angle the line makes with the horizontal axis in degrees"
+    },
+    {
+      "name": "angleInRadians",
+      "label": "Angle of Inclination (rad)",
+      "type": "number",
+      "precision": 6,
+      "unit": "rad",
+      "section": "secondary",
+      "description": "The angle the line makes with the horizontal axis in radians"
+    },
+    {
+      "name": "rise",
+      "label": "Rise (Δy)",
+      "type": "number",
+      "precision": 6,
+      "unit": "",
+      "section": "secondary",
+      "description": "The vertical change between the two points"
+    },
+    {
+      "name": "run",
+      "label": "Run (Δx)",
+      "type": "number",
+      "precision": 6,
+      "unit": "",
+      "section": "secondary",
+      "description": "The horizontal change between the two points"
+    },
+    {
+      "name": "lineType",
+      "label": "Line Type",
+      "type": "text",
+      "section": "secondary",
+      "description": "Type of line (horizontal, vertical, increasing, or decreasing)"
+    },
+    {
+      "name": "pointsDisplay",
+      "label": "Points",
+      "type": "text",
+      "section": "secondary",
+      "description": "The coordinates of both points"
+    }
+  ],
+  
+  "examples": [
+    {
+      "title": "Positive Slope",
+      "description": "Calculate slope between (1, 2) and (3, 6)",
+      "inputs": {
+        "x1": 1,
+        "y1": 2,
+        "x2": 3,
+        "y2": 6
+      },
+      "explanation": "Slope = (6-2)/(3-1) = 4/2 = 2"
+    },
+    {
+      "title": "Negative Slope",
+      "description": "Calculate slope between (0, 5) and (4, 1)",
+      "inputs": {
+        "x1": 0,
+        "y1": 5,
+        "x2": 4,
+        "y2": 1
+      },
+      "explanation": "Slope = (1-5)/(4-0) = -4/4 = -1"
+    },
+    {
+      "title": "Horizontal Line",
+      "description": "Calculate slope between (2, 3) and (7, 3)",
+      "inputs": {
+        "x1": 2,
+        "y1": 3,
+        "x2": 7,
+        "y2": 3
+      },
+      "explanation": "Slope = (3-3)/(7-2) = 0/5 = 0 (horizontal line)"
+    }
+  ],
+  
+  "seo": {
+    "title": "Slope Calculator | Calculate Gradient Between Two Points Online",
+    "metaDescription": "Calculate the slope (gradient) of a line between two points using the slope formula. Find rise over run, angle of inclination, and line direction instantly.",
+    "keywords": [
+      "slope calculator",
+      "gradient calculator",
+      "slope formula",
+      "rise over run",
+      "slope between two points",
+      "line slope calculator",
+      "gradient formula",
+      "angle of inclination",
+      "slope calculation",
+      "linear gradient",
+      "slope finder",
+      "line gradient calculator"
+    ]
+  },
+
+  "content": {
+    "howItWorks": {
+      "title": "How to Calculate Slope (Gradient) Between Two Points",
+      "description": "The slope (gradient) of a line is the measure of its steepness, calculated as the ratio of vertical change to horizontal change between any two points on the line. It represents how much y changes for each unit change in x.",
+      "formula": "m = (y₂ - y₁) / (x₂ - x₁)",
+      "variables": [
+        { "symbol": "m", "name": "Slope", "description": "The gradient or steepness of the line" },
+        { "symbol": "x₁, y₁", "name": "First Point", "description": "Coordinates of the first point" },
+        { "symbol": "x₂, y₂", "name": "Second Point", "description": "Coordinates of the second point" },
+        { "symbol": "Δy", "name": "Rise", "description": "Vertical change (y₂ - y₁)" },
+        { "symbol": "Δx", "name": "Run", "description": "Horizontal change (x₂ - x₁)" }
+      ]
+    },
+    "useCases": [
+      {
+        "title": "Engineering & Construction",
+        "description": "Calculate grades for roads, ramps, and roof pitches to ensure proper drainage and accessibility."
+      },
+      {
+        "title": "Physics & Motion",
+        "description": "Analyze velocity, acceleration, and rates of change in physics and kinematics problems."
+      },
+      {
+        "title": "Economics & Finance",
+        "description": "Determine rates of change in financial data, growth trends, and economic indicators."
+      },
+      {
+        "title": "Geography & Surveying",
+        "description": "Calculate terrain slopes, elevation changes, and topographical gradients for mapping."
+      }
+    ],
+    "tips": [
+      "Positive slope means the line rises from left to right (increasing function)",
+      "Negative slope means the line falls from left to right (decreasing function)",
+      "Zero slope indicates a horizontal line (constant function)",
+      "Undefined slope occurs when x₂ = x₁ (vertical line)",
+      "The steeper the line, the larger the absolute value of the slope",
+      "Slope is independent of which point you choose as (x₁, y₁) or (x₂, y₂)"
+    ],
+    "examples": [
+      {
+        "title": "Positive Slope Example",
+        "scenario": "Find the slope between (1, 2) and (3, 6)",
+        "calculation": "m = (6-2)/(3-1) = 4/2 = 2",
+        "result": "Slope: 2 (line rises 2 units for every 1 unit right)"
+      },
+      {
+        "title": "Negative Slope Example",
+        "scenario": "Find the slope between (0, 5) and (4, 1)",
+        "calculation": "m = (1-5)/(4-0) = -4/4 = -1",
+        "result": "Slope: -1 (line falls 1 unit for every 1 unit right)"
+      },
+      {
+        "title": "Zero Slope Example",
+        "scenario": "Find the slope between (2, 3) and (7, 3)",
+        "calculation": "m = (3-3)/(7-2) = 0/5 = 0",
+        "result": "Slope: 0 (horizontal line, no vertical change)"
+      }
+    ]
+  },
+
+  "relatedCalculators": [
+    {
+      "name": "Length of a Line Segment Calculator",
+      "slug": "length-of-a-line-segment",
+      "category": "math"
+    },
+    {
+      "name": "Midpoint Calculator",
+      "slug": "midpoint",
+      "category": "math"
+    }
+  ],
+  
+  "pSEODataset": "/datasets/math/slope-calculator-data.csv"
+}
