@@ -2,13 +2,91 @@
   "toolName": "Simple Interest Calculator",
   "toolSlug": "simple-interest",
   "categorySlug": "math",
-  "description": "Calculate the simple interest on a loan or principal amount.",
+  "description": "Calculate the simple interest on a loan or principal amount with flexible time units.",
   "calculationLogic": "SIMPLE_INTEREST",
-  "parameters": [
-    { "name": "principal", "label": "Principal Amount", "type": "number", "unit": "$" },
-    { "name": "rate", "label": "Annual Interest Rate", "type": "number", "unit": "%" },
-    { "name": "time", "label": "Time Period", "type": "number", "unit": "years" }
+  
+  "sections": [
+    {
+      "id": "loan-details",
+      "title": "Loan Information",
+      "description": "Enter the principal amount and interest rate",
+      "required": true,
+      "order": 1,
+      "collapsible": false,
+      "fields": [
+        {
+          "name": "principal",
+          "label": "Principal Amount",
+          "type": "number",
+          "required": true,
+          "min": 0,
+          "max": 100000000,
+          "step": 0.01,
+          "placeholder": "Enter principal amount",
+          "unit": "usd",
+          "validation": {
+            "min": 0,
+            "message": "Principal amount must be greater than 0"
+          }
+        },
+        {
+          "name": "rate",
+          "label": "Annual Interest Rate",
+          "type": "number",
+          "required": true,
+          "min": 0,
+          "max": 100,
+          "step": 0.01,
+          "placeholder": "Enter annual interest rate",
+          "unit": "%",
+          "validation": {
+            "min": 0,
+            "max": 100,
+            "message": "Interest rate must be between 0% and 100%"
+          }
+        },
+        {
+          "name": "time",
+          "label": "Time Period",
+          "type": "number",
+          "required": true,
+          "min": 0,
+          "max": 1000,
+          "step": 0.01,
+          "placeholder": "Enter time period",
+          "units": {
+            "category": "time",
+            "available": ["year", "month", "week", "day"],
+            "default": "year",
+            "allowCustom": false
+          },
+          "validation": {
+            "min": 0,
+            "message": "Time period must be greater than 0"
+          }
+        }
+      ]
+    }
   ],
-  "outputs": [{ "name": "interest", "label": "Total Interest", "type": "number", "precision": 2, "unit": "$" }],
+  
+  "outputs": [
+    {
+      "name": "interest",
+      "label": "Total Interest",
+      "type": "number",
+      "precision": 2,
+      "unit": "usd",
+      "section": "primary"
+    },
+    {
+      "name": "totalAmount",
+      "label": "Total Amount",
+      "type": "number",
+      "precision": 2,
+      "unit": "usd",
+      "section": "secondary"
+    }
+  ],
+  
   "pSEODataset": "/datasets/math/simple-interest-data.csv"
 }

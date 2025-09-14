@@ -1,25 +1,30 @@
-// This is a special Map object that holds all our calculation functions.
-// Using a Map is a safe way to link the 'calculationLogic' string from our JSON
-// manifests to an actual, secure function here in our code.
-const calculationLibrary = new Map([
+// Import the calculator registry for dynamic loading
+import { calculatorRegistry } from '../logic/calculator-registry.js';
+
+// Legacy calculation library for backward compatibility
+const legacyCalculationLibrary = new Map([
   [
     'SIMPLE_INTEREST',
-    ({ principal, rate, time }) => {
-      // Formula: Interest = Principal * (Rate / 100) * Time
-      const result = principal * (rate / 100) * time;
-      // We return an object. This is good practice for APIs.
-      return { interest: result };
-    }
-  ],
-  [
-    'VELOCITY',
-    ({ distance, time }) => {
-      if (time === 0) {
-        return { error: 'Time cannot be zero.' };
+    ({ principal, rate, time, timeUnit = 'year' }) => {
+      // Convert time to years for calculation
+      let timeInYears = time;
+      
+      if (timeUnit === 'month') {
+        timeInYears = time / 12;
+      } else if (timeUnit === 'week') {
+        timeInYears = time / 52; // Standard financial convention: 52 weeks per year
+      } else if (timeUnit === 'day') {
+        timeInYears = time / 365.25; // Account for leap years
       }
-      // Formula: Velocity = Distance / Time
-      const result = distance / time;
-      return { velocity: result };
+      
+      // Formula: Interest = Principal * (Rate / 100) * Time (in years)
+      const interest = principal * (rate / 100) * timeInYears;
+      const totalAmount = principal + interest;
+      
+      return { 
+        interest: interest,
+        totalAmount: totalAmount
+      };
     }
   ],
   [
@@ -31,17 +36,6 @@ const calculationLibrary = new Map([
       // Formula: Percent = Decimal × 100
       const result = decimal * 100;
       return { percent: result };
-    }
-  ],
-  [
-    'BMI_CALCULATOR',
-    ({ weight, height }) => {
-      if (weight <= 0 || height <= 0) {
-        return { error: 'Weight and height must be greater than zero.' };
-      }
-      // Formula: BMI = Weight (kg) / Height (m)²
-      const result = weight / (height * height);
-      return { bmi: result };
     }
   ]
 ]);
@@ -60,18 +54,71 @@ export default defineEventHandler(async (event) => {
     throw createError({ statusCode: 400, statusMessage: 'Calculation logic key is missing.' });
   }
 
-  // Look up the correct function in our library using the key.
-  const calculate = calculationLibrary.get(logicKey);
+  // Try to get calculator from registry first, then fall back to legacy library
+  let calculate = null;
+  
+  try {
+    // Debug: Log available calculators
+    await calculatorRegistry.initialize();
+    const availableCalculators = calculatorRegistry.getAvailableCalculators();
+    console.log(`Available calculators in registry: ${availableCalculators.join(', ')}`);
+    console.log(`Looking for calculator: ${logicKey}`);
+    
+    // First, try the new calculator registry
+    if (calculatorRegistry.hasCalculator(logicKey)) {
+      calculate = await calculatorRegistry.getCalculator(logicKey);
+      console.log(`✅ Using modular calculator: ${logicKey}`);
+    } else {
+      // Fall back to legacy calculation library
+      calculate = legacyCalculationLibrary.get(logicKey);
+      if (calculate) {
+        console.log(`✅ Using legacy calculator: ${logicKey}`);
+      } else {
+        console.log(`❌ Calculator not found in either registry or legacy library: ${logicKey}`);
+      }
+    }
+  } catch (registryError) {
+    console.warn(`Registry error for ${logicKey}:`, registryError.message);
+    // Fall back to legacy library
+    calculate = legacyCalculationLibrary.get(logicKey);
+    if (calculate) {
+      console.log(`✅ Using legacy calculator (after registry error): ${logicKey}`);
+    }
+  }
 
   // If we can't find a matching function, send an error.
   if (!calculate) {
-    throw createError({ statusCode: 500, statusMessage: `Calculation logic for '${logicKey}' not found.` });
+    throw createError({ 
+      statusCode: 500, 
+      statusMessage: `Calculation logic for '${logicKey}' not found in registry or legacy library.` 
+    });
   }
 
   // Run the found function with the user's data and return the result.
   // The result will be sent back to the frontend as JSON.
   try {
-    return calculate(body.inputs);
+    // Prepare inputs for legacy calculators from section-based data
+    let processedInputs = body.inputs;
+    
+    // If inputs are section-based, flatten them for legacy calculators
+    if (body.inputs && typeof body.inputs === 'object' && !Array.isArray(body.inputs)) {
+      // Check if this looks like section-based data
+      const firstKey = Object.keys(body.inputs)[0];
+      if (body.inputs[firstKey] && typeof body.inputs[firstKey] === 'object' && !Array.isArray(body.inputs[firstKey])) {
+        // Flatten section-based inputs
+        processedInputs = {};
+        for (const sectionId of Object.keys(body.inputs)) {
+          Object.assign(processedInputs, body.inputs[sectionId]);
+        }
+      }
+    }
+    
+    // For modular calculators, pass the manifest if available
+    if (body.manifest && calculate.name !== 'anonymous') {
+      return calculate(processedInputs, body.manifest);
+    } else {
+      return calculate(processedInputs);
+    }
   } catch (error) {
     console.error('Calculation error:', error);
     throw createError({ 

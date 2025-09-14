@@ -3,10 +3,5 @@
     "name": "Mathematics",
     "slug": "math",
     "description": "Calculators for mathematical concepts and formulas."
-  },
-  {
-    "name": "Physics",
-    "slug": "physics",
-    "description": "Calculators for physical laws and equations."
   }
 ]
