@@ -1,0 +1,280 @@
+{
+  "toolName": "Parabola Calculator",
+  "toolSlug": "parabola-calculator",
+  "categorySlug": "math",
+  "description": "Calculate parabola properties including vertex, focus, directrix, axis of symmetry, and graph coordinates from the standard form equation y = ax² + bx + c.",
+  "calculationLogic": "PARABOLA_CALCULATOR",
+  
+  "sections": [
+    {
+      "id": "parabola-coefficients",
+      "title": "Parabola Equation Coefficients",
+      "description": "Enter the coefficients for the standard form equation y = ax² + bx + c",
+      "required": true,
+      "order": 1,
+      "collapsible": false,
+      "fields": [
+        {
+          "name": "a",
+          "label": "Coefficient a (quadratic term)",
+          "type": "number",
+          "required": true,
+          "step": 0.001,
+          "placeholder": "Enter coefficient a",
+          "unit": "",
+          "validation": {
+            "notEqual": 0,
+            "message": "Coefficient 'a' cannot be zero (would not be a parabola)"
+          },
+          "helpText": "The coefficient of x² in the equation y = ax² + bx + c (cannot be zero)"
+        },
+        {
+          "name": "b",
+          "label": "Coefficient b (linear term)",
+          "type": "number",
+          "required": true,
+          "step": 0.001,
+          "placeholder": "Enter coefficient b",
+          "unit": "",
+          "validation": {
+            "message": "Coefficient b must be a valid number"
+          },
+          "helpText": "The coefficient of x in the equation y = ax² + bx + c"
+        },
+        {
+          "name": "c",
+          "label": "Coefficient c (constant term)",
+          "type": "number",
+          "required": true,
+          "step": 0.001,
+          "placeholder": "Enter coefficient c",
+          "unit": "",
+          "validation": {
+            "message": "Coefficient c must be a valid number"
+          },
+          "helpText": "The constant term in the equation y = ax² + bx + c"
+        }
+      ]
+    }
+  ],
+  
+  "outputs": [
+    {
+      "name": "vertexX",
+      "label": "Vertex X-coordinate",
+      "type": "number",
+      "precision": 6,
+      "unit": "",
+      "section": "primary",
+      "description": "The x-coordinate of the parabola's vertex"
+    },
+    {
+      "name": "vertexY",
+      "label": "Vertex Y-coordinate",
+      "type": "number",
+      "precision": 6,
+      "unit": "",
+      "section": "primary",
+      "description": "The y-coordinate of the parabola's vertex"
+    },
+    {
+      "name": "vertex",
+      "label": "Vertex",
+      "type": "text",
+      "section": "primary",
+      "description": "The vertex coordinates as (h, k)"
+    },
+    {
+      "name": "axisOfSymmetry",
+      "label": "Axis of Symmetry",
+      "type": "text",
+      "section": "primary",
+      "description": "The equation of the axis of symmetry"
+    },
+    {
+      "name": "focusX",
+      "label": "Focus X-coordinate",
+      "type": "number",
+      "precision": 6,
+      "unit": "",
+      "section": "secondary",
+      "description": "The x-coordinate of the parabola's focus"
+    },
+    {
+      "name": "focusY",
+      "label": "Focus Y-coordinate",
+      "type": "number",
+      "precision": 6,
+      "unit": "",
+      "section": "secondary",
+      "description": "The y-coordinate of the parabola's focus"
+    },
+    {
+      "name": "focus",
+      "label": "Focus",
+      "type": "text",
+      "section": "secondary",
+      "description": "The focus coordinates as (h, k + 1/4a)"
+    },
+    {
+      "name": "directrix",
+      "label": "Directrix",
+      "type": "text",
+      "section": "secondary",
+      "description": "The equation of the directrix line"
+    },
+    {
+      "name": "discriminant",
+      "label": "Discriminant",
+      "type": "number",
+      "precision": 6,
+      "unit": "",
+      "section": "secondary",
+      "description": "The discriminant (b² - 4ac) for finding x-intercepts"
+    },
+    {
+      "name": "yIntercept",
+      "label": "Y-Intercept",
+      "type": "number",
+      "precision": 6,
+      "unit": "",
+      "section": "secondary",
+      "description": "The y-intercept (where x = 0)"
+    },
+    {
+      "name": "opens",
+      "label": "Opens",
+      "type": "text",
+      "section": "secondary",
+      "description": "Direction the parabola opens (upward or downward)"
+    }
+  ],
+  
+  "examples": [
+    {
+      "title": "Basic Upward Parabola",
+      "description": "Calculate properties of y = x² - 4x + 3",
+      "inputs": {
+        "a": 1,
+        "b": -4,
+        "c": 3
+      },
+      "explanation": "Vertex at (2, -1), opens upward, axis of symmetry x = 2"
+    },
+    {
+      "title": "Downward Opening Parabola",
+      "description": "Calculate properties of y = -2x² + 4x + 1",
+      "inputs": {
+        "a": -2,
+        "b": 4,
+        "c": 1
+      },
+      "explanation": "Vertex at (1, 3), opens downward, axis of symmetry x = 1"
+    },
+    {
+      "title": "Parabola with No Linear Term",
+      "description": "Calculate properties of y = 3x² + 5",
+      "inputs": {
+        "a": 3,
+        "b": 0,
+        "c": 5
+      },
+      "explanation": "Vertex at (0, 5), opens upward, axis of symmetry x = 0"
+    }
+  ],
+  
+  "seo": {
+    "title": "Parabola Calculator | Vertex, Focus, Directrix Calculator Online",
+    "metaDescription": "Calculate parabola properties including vertex, focus, directrix, and axis of symmetry from y = ax² + bx + c. Free online parabola calculator with step-by-step solutions.",
+    "keywords": [
+      "parabola calculator",
+      "vertex calculator",
+      "parabola vertex",
+      "focus of parabola",
+      "directrix calculator",
+      "axis of symmetry",
+      "quadratic function calculator",
+      "parabola properties",
+      "parabola equation solver",
+      "vertex form calculator",
+      "parabola graphing calculator",
+      "quadratic vertex calculator"
+    ]
+  },
+
+  "content": {
+    "howItWorks": {
+      "title": "How to Calculate Parabola Properties",
+      "description": "A parabola is the graph of a quadratic function y = ax² + bx + c. Key properties include the vertex (turning point), focus, directrix, and axis of symmetry, all calculated using the coefficients a, b, and c.",
+      "formula": "y = ax² + bx + c",
+      "variables": [
+        { "symbol": "a", "name": "Quadratic coefficient", "description": "Controls width and opening direction (a > 0: opens up, a < 0: opens down)" },
+        { "symbol": "b", "name": "Linear coefficient", "description": "Affects the position of the axis of symmetry" },
+        { "symbol": "c", "name": "Constant term", "description": "The y-intercept (value when x = 0)" },
+        { "symbol": "h", "name": "Vertex x-coordinate", "description": "h = -b/(2a)" },
+        { "symbol": "k", "name": "Vertex y-coordinate", "description": "k = c - b²/(4a)" }
+      ]
+    },
+    "useCases": [
+      {
+        "title": "Physics & Engineering",
+        "description": "Model projectile motion, satellite orbits, and parabolic reflectors in engineering applications."
+      },
+      {
+        "title": "Architecture & Design",
+        "description": "Design parabolic arches, bridges, and architectural elements with optimal structural properties."
+      },
+      {
+        "title": "Mathematics Education",
+        "description": "Study quadratic functions, conic sections, and graphing techniques in algebra and precalculus."
+      },
+      {
+        "title": "Optimization Problems",
+        "description": "Find maximum and minimum values in business, economics, and scientific applications."
+      }
+    ],
+    "tips": [
+      "The vertex is the highest or lowest point on the parabola, depending on the sign of 'a'",
+      "If a > 0, the parabola opens upward and has a minimum value at the vertex",
+      "If a < 0, the parabola opens downward and has a maximum value at the vertex",
+      "The axis of symmetry always passes through the vertex: x = -b/(2a)",
+      "The focus and directrix are equidistant from any point on the parabola",
+      "The discriminant (b² - 4ac) determines the number of x-intercepts: positive = 2, zero = 1, negative = 0"
+    ],
+    "examples": [
+      {
+        "title": "Standard Upward Parabola",
+        "scenario": "Find properties of y = x² - 4x + 3",
+        "calculation": "Vertex: (-(-4)/(2×1), 3-(-4)²/(4×1)) = (2, -1)",
+        "result": "Vertex: (2, -1), Opens: Upward, Axis: x = 2"
+      },
+      {
+        "title": "Downward Opening Parabola",
+        "scenario": "Find properties of y = -2x² + 4x + 1",
+        "calculation": "Vertex: (-4/(2×(-2)), 1-4²/(4×(-2))) = (1, 3)",
+        "result": "Vertex: (1, 3), Opens: Downward, Axis: x = 1"
+      },
+      {
+        "title": "Simple Parabola",
+        "scenario": "Find properties of y = 3x² + 5",
+        "calculation": "Vertex: (-0/(2×3), 5-0²/(4×3)) = (0, 5)",
+        "result": "Vertex: (0, 5), Opens: Upward, Axis: x = 0"
+      }
+    ]
+  },
+
+  "relatedCalculators": [
+    {
+      "name": "Standard Form to Slope Intercept Form Calculator",
+      "slug": "standard-form-to-slope-intercept",
+      "category": "math"
+    },
+    {
+      "name": "Midpoint Calculator",
+      "slug": "midpoint",
+      "category": "math"
+    }
+  ],
+  
+  "pSEODataset": "/datasets/math/parabola-calculator-data.csv"
+}

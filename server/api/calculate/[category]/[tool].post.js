@@ -184,6 +184,80 @@ const legacyCalculationLibrary = new Map([
         coordinateDisplay
       };
     }
+  ],
+  [
+    'PARABOLA_CALCULATOR',
+    (inputs) => {
+      // Extract coefficients from section-based or flat structure
+      let a, b, c;
+      if (inputs['parabola-coefficients']) {
+        const coefficients = inputs['parabola-coefficients'];
+        a = coefficients.a;
+        b = coefficients.b;
+        c = coefficients.c;
+      } else {
+        a = inputs.a;
+        b = inputs.b;
+        c = inputs.c;
+      }
+
+      // Validate inputs
+      if (!isValidNumber(a) || !isValidNumber(b) || !isValidNumber(c)) {
+        return { error: 'All coefficients (a, b, c) must be valid numbers.' };
+      }
+
+      if (a === 0) {
+        return { error: 'Coefficient a cannot be zero (would not be a parabola).' };
+      }
+
+      // Calculate vertex coordinates
+      const vertexX = -b / (2 * a);
+      const vertexY = c - (b * b) / (4 * a);
+
+      // Calculate focus coordinates
+      const focusX = vertexX;
+      const focusY = vertexY + 1 / (4 * a);
+
+      // Calculate directrix
+      const directrixY = vertexY - 1 / (4 * a);
+
+      // Calculate other properties
+      const discriminant = b * b - 4 * a * c;
+      const yIntercept = c;
+      const opens = a > 0 ? 'upward' : 'downward';
+
+      // Format numbers
+      const formatNumber = (num) => {
+        if (Number.isInteger(num)) return num.toString();
+        return Math.round(num * 1000000) / 1000000;
+      };
+
+      // Format coordinates
+      const formatCoordinates = (x, y) => `(${formatNumber(x)}, ${formatNumber(y)})`;
+      
+      const vertex = formatCoordinates(vertexX, vertexY);
+      const focus = formatCoordinates(focusX, focusY);
+      const axisOfSymmetry = `x = ${formatNumber(vertexX)}`;
+      const directrix = `y = ${formatNumber(directrixY)}`;
+
+      function isValidNumber(value) {
+        return typeof value === 'number' && !isNaN(value) && isFinite(value);
+      }
+
+      return {
+        vertexX: formatNumber(vertexX),
+        vertexY: formatNumber(vertexY),
+        vertex,
+        axisOfSymmetry,
+        focusX: formatNumber(focusX),
+        focusY: formatNumber(focusY),
+        focus,
+        directrix,
+        discriminant: formatNumber(discriminant),
+        yIntercept: formatNumber(yIntercept),
+        opens
+      };
+    }
   ]
 ]);
 
