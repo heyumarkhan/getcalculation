@@ -14,6 +14,16 @@ export default defineNuxtConfig({
   // Tailwind CSS Configuration
   modules: ['@nuxtjs/tailwindcss'],
   
+  // App Configuration
+  app: {
+    head: {
+      meta: [
+        { name: 'theme-color', content: '#f9fafb' },
+        { name: 'theme-color', content: '#1f2937', media: '(prefers-color-scheme: dark)' }
+      ]
+    }
+  },
+  
   // Temporarily disable complex prerender hooks to fix startup issues
   // TODO: Re-enable after basic server is working
   // hooks: {

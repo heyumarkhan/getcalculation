@@ -62,6 +62,8 @@ export function useTheme() {
     }
   }
 
+  // Theme initialization is handled by the theme.client.js plugin
+
   // Apply theme to document
   const applyTheme = (newTheme) => {
     if (process.client) {
@@ -142,9 +144,4 @@ export function useTheme() {
   }
 }
 
-// Auto-initialize theme when composable is imported
-if (process.client) {
-  const { initializeTheme, watchSystemTheme } = useTheme()
-  initializeTheme()
-  watchSystemTheme()
-}
+// Theme initialization is handled by the theme.client.js plugin

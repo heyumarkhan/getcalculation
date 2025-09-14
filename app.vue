@@ -10,10 +10,5 @@
 </template>
 
 <script setup>
-// Initialize theme on app start
-const { initializeTheme } = useTheme()
-
-onMounted(() => {
-  initializeTheme()
-})
+// Theme is automatically initialized via the theme.client.js plugin
 </script>

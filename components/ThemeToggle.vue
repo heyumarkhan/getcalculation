@@ -1,18 +1,19 @@
 <template>
-  <button
-    @click="toggleTheme"
-    :aria-label="`Switch to ${isDark ? 'light' : 'dark'} mode`"
-    class="theme-toggle"
-    :class="[
-      'relative inline-flex items-center justify-center',
-      'w-12 h-12 rounded-lg transition-all duration-200',
-      'focus:outline-none focus:ring-2 focus:ring-offset-2',
-      'hover:scale-105 active:scale-95',
-      isDark 
-        ? 'bg-neutral-700 hover:bg-neutral-600 focus:ring-neutral-500 text-yellow-400' 
-        : 'bg-neutral-200 hover:bg-neutral-300 focus:ring-neutral-400 text-neutral-600'
-    ]"
-  >
+  <ClientOnly>
+    <button
+      @click="toggleTheme"
+      :aria-label="`Switch to ${isDark ? 'light' : 'dark'} mode`"
+      class="theme-toggle"
+      :class="[
+        'relative inline-flex items-center justify-center',
+        'w-12 h-12 rounded-lg transition-all duration-200',
+        'focus:outline-none focus:ring-2 focus:ring-offset-2',
+        'hover:scale-105 active:scale-95',
+        isDark 
+          ? 'bg-neutral-700 hover:bg-neutral-600 focus:ring-neutral-500 text-yellow-400' 
+          : 'bg-neutral-200 hover:bg-neutral-300 focus:ring-neutral-400 text-neutral-600'
+      ]"
+    >
     <!-- Sun Icon (Light Mode) -->
     <svg
       v-if="isDark"
@@ -53,7 +54,19 @@
     >
       {{ isDark ? 'Switch to Light Mode' : 'Switch to Dark Mode' }}
     </div>
-  </button>
+    </button>
+    <template #fallback>
+      <!-- Fallback for SSR - shows a neutral button -->
+      <button
+        class="theme-toggle relative inline-flex items-center justify-center w-12 h-12 rounded-lg transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 hover:scale-105 active:scale-95 bg-neutral-200 hover:bg-neutral-300 focus:ring-neutral-400 text-neutral-600"
+        aria-label="Theme toggle"
+      >
+        <svg class="w-5 h-5 transition-all duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+        </svg>
+      </button>
+    </template>
+  </ClientOnly>
 </template>
 
 <script setup>
