@@ -131,14 +131,26 @@ export class PerimeterCalculator extends BaseCalculator {
    * Validate parallelogram inputs (same as rectangle)
    */
   validateParallelogram() {
-    return this.validateRectangle();
+    const { length, width } = this.extractDimensions('parallelogram-dimensions');
+    
+    if (!this.isValidPositiveNumber(length) || !this.isValidPositiveNumber(width)) {
+      return { valid: false, error: 'Parallelogram requires positive length and width values' };
+    }
+    
+    return { valid: true };
   }
 
   /**
    * Validate rhombus inputs (same as square)
    */
   validateRhombus() {
-    return this.validateSquare();
+    const { side } = this.extractDimensions('rhombus-dimensions');
+    
+    if (!this.isValidPositiveNumber(side)) {
+      return { valid: false, error: 'Rhombus requires a positive side length value' };
+    }
+    
+    return { valid: true };
   }
 
   /**
@@ -306,7 +318,7 @@ export class PerimeterCalculator extends BaseCalculator {
    * Calculate parallelogram perimeter
    */
   calculateParallelogramPerimeter() {
-    const { length, width } = this.extractDimensions('rectangle-dimensions');
+    const { length, width } = this.extractDimensions('parallelogram-dimensions');
     const perimeter = 2 * (length + width);
     
     return {
@@ -322,7 +334,7 @@ export class PerimeterCalculator extends BaseCalculator {
    * Calculate rhombus perimeter
    */
   calculateRhombusPerimeter() {
-    const { side } = this.extractDimensions('square-dimensions');
+    const { side } = this.extractDimensions('rhombus-dimensions');
     const perimeter = 4 * side;
     
     return {

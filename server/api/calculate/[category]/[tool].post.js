@@ -578,24 +578,33 @@ export default defineEventHandler(async (event) => {
   // Run the found function with the user's data and return the result.
   // The result will be sent back to the frontend as JSON.
   try {
-    // Prepare inputs for legacy calculators from section-based data
+    // Prepare inputs based on calculator type
     let processedInputs = body.inputs;
     
-    // If inputs are section-based, flatten them for legacy calculators
-    if (body.inputs && typeof body.inputs === 'object' && !Array.isArray(body.inputs)) {
-      // Check if this looks like section-based data
-      const firstKey = Object.keys(body.inputs)[0];
-      if (body.inputs[firstKey] && typeof body.inputs[firstKey] === 'object' && !Array.isArray(body.inputs[firstKey])) {
-        // Flatten section-based inputs
-        processedInputs = {};
-        for (const sectionId of Object.keys(body.inputs)) {
-          Object.assign(processedInputs, body.inputs[sectionId]);
+    // Check if this is a modular calculator (has a name property)
+    const isModularCalculator = calculate.name !== 'anonymous';
+    
+    if (isModularCalculator) {
+      // For modular calculators, keep section-based structure
+      // The BaseCalculator will handle section-based validation
+      processedInputs = body.inputs;
+    } else {
+      // For legacy calculators, flatten section-based inputs
+      if (body.inputs && typeof body.inputs === 'object' && !Array.isArray(body.inputs)) {
+        // Check if this looks like section-based data
+        const firstKey = Object.keys(body.inputs)[0];
+        if (body.inputs[firstKey] && typeof body.inputs[firstKey] === 'object' && !Array.isArray(body.inputs[firstKey])) {
+          // Flatten section-based inputs
+          processedInputs = {};
+          for (const sectionId of Object.keys(body.inputs)) {
+            Object.assign(processedInputs, body.inputs[sectionId]);
+          }
         }
       }
     }
     
     // For modular calculators, pass the manifest if available
-    if (body.manifest && calculate.name !== 'anonymous') {
+    if (body.manifest && isModularCalculator) {
       return calculate(processedInputs, body.manifest);
     } else {
       return calculate(processedInputs);

@@ -203,11 +203,151 @@
       ]
     },
     {
+      "id": "parallelogram-dimensions",
+      "title": "Parallelogram Dimensions",
+      "description": "Enter the length and width of the parallelogram",
+      "required": false,
+      "order": 6,
+      "collapsible": false,
+      "conditionalDisplay": {
+        "field": "shapeType",
+        "value": "parallelogram"
+      },
+      "fields": [
+        {
+          "name": "length",
+          "label": "Length",
+          "type": "number",
+          "required": false,
+          "min": 0.001,
+          "step": 0.001,
+          "placeholder": "Enter length",
+          "unit": "units",
+          "validation": {
+            "message": "Length must be a positive number"
+          },
+          "helpText": "The longer side of the parallelogram"
+        },
+        {
+          "name": "width",
+          "label": "Width",
+          "type": "number",
+          "required": false,
+          "min": 0.001,
+          "step": 0.001,
+          "placeholder": "Enter width",
+          "unit": "units",
+          "validation": {
+            "message": "Width must be a positive number"
+          },
+          "helpText": "The shorter side of the parallelogram"
+        }
+      ]
+    },
+    {
+      "id": "rhombus-dimensions",
+      "title": "Rhombus Dimensions",
+      "description": "Enter the side length of the rhombus",
+      "required": false,
+      "order": 7,
+      "collapsible": false,
+      "conditionalDisplay": {
+        "field": "shapeType",
+        "value": "rhombus"
+      },
+      "fields": [
+        {
+          "name": "side",
+          "label": "Side Length",
+          "type": "number",
+          "required": false,
+          "min": 0.001,
+          "step": 0.001,
+          "placeholder": "Enter side length",
+          "unit": "units",
+          "validation": {
+            "message": "Side length must be a positive number"
+          },
+          "helpText": "The length of each side of the rhombus"
+        }
+      ]
+    },
+    {
+      "id": "trapezoid-dimensions",
+      "title": "Trapezoid Dimensions",
+      "description": "Enter the four side lengths of the trapezoid",
+      "required": false,
+      "order": 8,
+      "collapsible": false,
+      "conditionalDisplay": {
+        "field": "shapeType",
+        "value": "trapezoid"
+      },
+      "fields": [
+        {
+          "name": "side1",
+          "label": "Side 1",
+          "type": "number",
+          "required": false,
+          "min": 0.001,
+          "step": 0.001,
+          "placeholder": "Enter side 1 length",
+          "unit": "units",
+          "validation": {
+            "message": "Side 1 must be a positive number"
+          },
+          "helpText": "Length of the first side"
+        },
+        {
+          "name": "side2",
+          "label": "Side 2",
+          "type": "number",
+          "required": false,
+          "min": 0.001,
+          "step": 0.001,
+          "placeholder": "Enter side 2 length",
+          "unit": "units",
+          "validation": {
+            "message": "Side 2 must be a positive number"
+          },
+          "helpText": "Length of the second side"
+        },
+        {
+          "name": "side3",
+          "label": "Side 3",
+          "type": "number",
+          "required": false,
+          "min": 0.001,
+          "step": 0.001,
+          "placeholder": "Enter side 3 length",
+          "unit": "units",
+          "validation": {
+            "message": "Side 3 must be a positive number"
+          },
+          "helpText": "Length of the third side"
+        },
+        {
+          "name": "side4",
+          "label": "Side 4",
+          "type": "number",
+          "required": false,
+          "min": 0.001,
+          "step": 0.001,
+          "placeholder": "Enter side 4 length",
+          "unit": "units",
+          "validation": {
+            "message": "Side 4 must be a positive number"
+          },
+          "helpText": "Length of the fourth side"
+        }
+      ]
+    },
+    {
       "id": "polygon-dimensions",
       "title": "Regular Polygon Dimensions",
       "description": "Enter the number of sides and side length",
       "required": false,
-      "order": 6,
+      "order": 9,
       "collapsible": false,
       "conditionalDisplay": {
         "field": "shapeType",
