@@ -1,0 +1,294 @@
+{
+  "toolName": "Volume Calculator",
+  "toolSlug": "volume-calculator",
+  "categorySlug": "math",
+  "description": "Calculate the volume of rectangular prisms and triangular pyramids. Get instant results with step-by-step explanations and formulas.",
+  "calculationLogic": "VOLUME_CALCULATOR",
+  
+  "sections": [
+    {
+      "id": "shape-selection",
+      "title": "Shape Selection",
+      "description": "Choose the geometric shape to calculate the volume",
+      "required": true,
+      "order": 1,
+      "collapsible": false,
+      "fields": [
+        {
+          "name": "shapeType",
+          "label": "Shape Type",
+          "type": "select",
+          "required": true,
+          "options": [
+            { "value": "rectangular-prism", "label": "Rectangular Prism" },
+            { "value": "triangular-pyramid", "label": "Triangular Pyramid" }
+          ],
+          "defaultValue": "rectangular-prism",
+          "helpText": "Select the type of 3D shape for volume calculation"
+        }
+      ]
+    },
+    {
+      "id": "rectangular-prism-dimensions",
+      "title": "Rectangular Prism Dimensions",
+      "description": "Enter the length, width, and height of the rectangular prism",
+      "required": false,
+      "order": 2,
+      "collapsible": false,
+      "conditionalDisplay": {
+        "field": "shapeType",
+        "value": "rectangular-prism"
+      },
+      "fields": [
+        {
+          "name": "length",
+          "label": "Length",
+          "type": "number",
+          "required": false,
+          "min": 0.001,
+          "step": 0.001,
+          "placeholder": "Enter length",
+          "unit": "units",
+          "validation": {
+            "message": "Length must be a positive number"
+          },
+          "helpText": "The length of the rectangular prism"
+        },
+        {
+          "name": "width",
+          "label": "Width",
+          "type": "number",
+          "required": false,
+          "min": 0.001,
+          "step": 0.001,
+          "placeholder": "Enter width",
+          "unit": "units",
+          "validation": {
+            "message": "Width must be a positive number"
+          },
+          "helpText": "The width of the rectangular prism"
+        },
+        {
+          "name": "height",
+          "label": "Height",
+          "type": "number",
+          "required": false,
+          "min": 0.001,
+          "step": 0.001,
+          "placeholder": "Enter height",
+          "unit": "units",
+          "validation": {
+            "message": "Height must be a positive number"
+          },
+          "helpText": "The height of the rectangular prism"
+        }
+      ]
+    },
+    {
+      "id": "triangular-pyramid-dimensions",
+      "title": "Triangular Pyramid Dimensions",
+      "description": "Enter the base dimensions and height of the triangular pyramid",
+      "required": false,
+      "order": 3,
+      "collapsible": false,
+      "conditionalDisplay": {
+        "field": "shapeType",
+        "value": "triangular-pyramid"
+      },
+      "fields": [
+        {
+          "name": "baseLength",
+          "label": "Base Length",
+          "type": "number",
+          "required": false,
+          "min": 0.001,
+          "step": 0.001,
+          "placeholder": "Enter base length",
+          "unit": "units",
+          "validation": {
+            "message": "Base length must be a positive number"
+          },
+          "helpText": "The length of the triangular base"
+        },
+        {
+          "name": "baseHeight",
+          "label": "Base Height",
+          "type": "number",
+          "required": false,
+          "min": 0.001,
+          "step": 0.001,
+          "placeholder": "Enter base height",
+          "unit": "units",
+          "validation": {
+            "message": "Base height must be a positive number"
+          },
+          "helpText": "The height of the triangular base"
+        },
+        {
+          "name": "pyramidHeight",
+          "label": "Pyramid Height",
+          "type": "number",
+          "required": false,
+          "min": 0.001,
+          "step": 0.001,
+          "placeholder": "Enter pyramid height",
+          "unit": "units",
+          "validation": {
+            "message": "Pyramid height must be a positive number"
+          },
+          "helpText": "The height of the pyramid (perpendicular distance from base to apex)"
+        }
+      ]
+    }
+  ],
+  
+  "outputs": [
+    {
+      "name": "volume",
+      "label": "Volume",
+      "type": "number",
+      "precision": 6,
+      "unit": "cubic units",
+      "section": "primary",
+      "description": "The volume of the 3D shape"
+    },
+    {
+      "name": "formula",
+      "label": "Formula Used",
+      "type": "text",
+      "section": "primary",
+      "description": "The mathematical formula used for calculation"
+    },
+    {
+      "name": "calculation",
+      "label": "Calculation Steps",
+      "type": "text",
+      "section": "secondary",
+      "description": "Step-by-step calculation breakdown"
+    },
+    {
+      "name": "shapeInfo",
+      "label": "Shape Information",
+      "type": "text",
+      "section": "secondary",
+      "description": "Additional information about the shape"
+    },
+    {
+      "name": "volumeInWords",
+      "label": "Volume in Words",
+      "type": "text",
+      "section": "secondary",
+      "description": "The volume value expressed in words"
+    }
+  ],
+  
+  "examples": [
+    {
+      "title": "Rectangular Prism Volume",
+      "description": "Calculate volume of a rectangular prism with length 5, width 3, and height 4",
+      "inputs": {
+        "shapeType": "rectangular-prism",
+        "length": 5,
+        "width": 3,
+        "height": 4
+      },
+      "explanation": "Volume = length × width × height = 5 × 3 × 4 = 60 cubic units"
+    },
+    {
+      "title": "Triangular Pyramid Volume",
+      "description": "Calculate volume of a triangular pyramid with base length 6, base height 4, and pyramid height 8",
+      "inputs": {
+        "shapeType": "triangular-pyramid",
+        "baseLength": 6,
+        "baseHeight": 4,
+        "pyramidHeight": 8
+      },
+      "explanation": "Volume = (1/3) × base area × height = (1/3) × (0.5 × 6 × 4) × 8 = (1/3) × 12 × 8 = 32 cubic units"
+    }
+  ],
+  
+  "seo": {
+    "title": "Volume Calculator | Calculate Volume of Rectangular Prism & Triangular Pyramid",
+    "metaDescription": "Calculate the volume of rectangular prisms and triangular pyramids instantly. Free online volume calculator with step-by-step solutions and formulas.",
+    "keywords": [
+      "volume calculator",
+      "rectangular prism volume",
+      "triangular pyramid volume",
+      "volume formula",
+      "3D shape volume",
+      "geometry calculator",
+      "math calculator",
+      "volume solver",
+      "prism volume",
+      "pyramid volume",
+      "cubic units",
+      "volume calculation"
+    ]
+  },
+
+  "content": {
+    "howItWorks": {
+      "title": "How to Calculate Volume of 3D Shapes",
+      "description": "Volume is the amount of space occupied by a three-dimensional object. Different shapes have specific formulas for calculating their volume.",
+      "formulas": [
+        { "shape": "Rectangular Prism", "formula": "V = l × w × h", "description": "Where l = length, w = width, h = height" },
+        { "shape": "Triangular Pyramid", "formula": "V = (1/3) × (1/2 × b × h) × H", "description": "Where b = base length, h = base height, H = pyramid height" }
+      ]
+    },
+    "useCases": [
+      {
+        "title": "Construction & Architecture",
+        "description": "Calculate concrete, soil, or material volumes needed for foundations, walls, and structural elements."
+      },
+      {
+        "title": "Packaging & Shipping",
+        "description": "Determine the volume of boxes, containers, and packages for shipping calculations and storage optimization."
+      },
+      {
+        "title": "Education & Learning",
+        "description": "Solve geometry homework problems and understand volume concepts in mathematics education."
+      },
+      {
+        "title": "Manufacturing & Design",
+        "description": "Calculate material requirements and capacity for manufacturing processes and product design."
+      }
+    ],
+    "tips": [
+      "Always use consistent units when measuring (all in inches, feet, meters, etc.)",
+      "For rectangular prisms, any face can be considered the base",
+      "For triangular pyramids, the base height is perpendicular to the base length",
+      "Double-check your measurements to ensure accurate calculations",
+      "Volume is always expressed in cubic units (cubic inches, cubic feet, cubic meters, etc.)",
+      "Remember that pyramid volume is always 1/3 of the volume of a prism with the same base and height"
+    ],
+    "examples": [
+      {
+        "title": "Storage Box",
+        "scenario": "Calculate the volume of a storage box that is 2 feet long, 1.5 feet wide, and 1 foot tall",
+        "calculation": "V = l × w × h = 2 × 1.5 × 1 = 3 cubic feet",
+        "result": "The storage box has a volume of 3 cubic feet"
+      },
+      {
+        "title": "Triangular Pyramid Tent",
+        "scenario": "Find the volume of a triangular pyramid tent with base length 8 feet, base height 6 feet, and pyramid height 10 feet",
+        "calculation": "V = (1/3) × (1/2 × b × h) × H = (1/3) × (1/2 × 8 × 6) × 10 = (1/3) × 24 × 10 = 80 cubic feet",
+        "result": "The tent has a volume of 80 cubic feet"
+      }
+    ]
+  },
+
+  "relatedCalculators": [
+    {
+      "name": "Area Calculator",
+      "slug": "area-calculator",
+      "category": "math"
+    },
+    {
+      "name": "Perimeter Calculator",
+      "slug": "perimeter-calculator",
+      "category": "math"
+    }
+  ],
+  
+  "pSEODataset": "/datasets/math/volume-calculator-data.csv"
+}

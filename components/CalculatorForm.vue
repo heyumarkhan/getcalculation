@@ -145,15 +145,15 @@ function getOutputValueClasses(output, value) {
   const baseClasses = 'font-bold';
   
   if (output?.type === 'number' || typeof value === 'number') {
-    return `${baseClasses} text-2xl text-accent-600`;
+    return `${baseClasses} text-2xl text-accent-600 dark:text-accent-400`;
   } else if (output?.type === 'string') {
     // Special styling for category results
     if (output.name === 'category') {
       return `${baseClasses} text-lg ${getCategoryColorClass(value)}`;
     }
-    return `${baseClasses} text-lg text-gray-700`;
+    return `${baseClasses} text-lg text-gray-700 dark:text-gray-300`;
   } else {
-    return `${baseClasses} text-lg text-gray-700`;
+    return `${baseClasses} text-lg text-gray-700 dark:text-gray-300`;
   }
 }
 
@@ -300,7 +300,7 @@ defineExpose({
           <!-- Section Header -->
           <div class="section-header mb-4">
             <h3 class="text-lg font-semibold text-gray-900 dark:text-gray-100">{{ section.title }}</h3>
-            <p v-if="section.description" class="text-sm text-gray-600 dark:text-gray-400 mt-1">{{ section.description }}</p>
+            <p v-if="section.description" class="text-sm text-gray-600 dark:text-gray-300 mt-1">{{ section.description }}</p>
           </div>
           
           <!-- Section Fields -->
@@ -349,7 +349,7 @@ defineExpose({
                 <label :for="field.name" class="form-label">
                   {{ field.label }}
                   <span v-if="field.required" class="text-red-500 ml-1">*</span>
-                  <span v-if="field.unit" class="text-neutral-500 font-normal">({{ field.unit }})</span>
+                  <span v-if="field.unit" class="text-neutral-500 dark:text-neutral-400 font-normal">({{ field.unit }})</span>
                 </label>
                 
                 <!-- Select Dropdown -->
@@ -410,7 +410,7 @@ defineExpose({
           <label :for="param.name" class="form-label">
             {{ param.label }}
             <span v-if="param.required" class="text-red-500 ml-1">*</span>
-            <span class="text-neutral-500 font-normal">({{ param.unit }})</span>
+            <span class="text-neutral-500 dark:text-neutral-400 font-normal">({{ param.unit }})</span>
           </label>
           <input
             :id="param.name"
@@ -464,15 +464,15 @@ defineExpose({
           <!-- Show results based on manifest outputs -->
             <template v-if="result">
               <div v-for="output in (manifest?.outputs || [])" :key="output?.name || Math.random()"
-                  class="bg-white rounded-lg p-6 border border-neutral-200">
+                  class="bg-white dark:bg-gradient-to-br dark:from-neutral-800 dark:to-neutral-900 rounded-lg p-6 border border-neutral-200 dark:border-neutral-600 shadow-sm dark:shadow-lg dark:shadow-neutral-900/50">
                 <div class="flex items-center justify-between">
-                  <span class="text-sm font-medium text-neutral-600">{{ output?.label || 'Result' }}</span>
+                  <span class="text-sm font-medium text-neutral-600 dark:text-neutral-300">{{ output?.label || 'Result' }}</span>
                   <span class="text-right">
                     <div :class="getOutputValueClasses(output, result[output.name])">
                       {{ formatOutputValue(result[output.name], output) }}
-                      <span v-if="output?.unit" class="text-lg font-normal text-neutral-500 ml-1">{{ output.unit }}</span>
+                      <span v-if="output?.unit" class="text-lg font-normal text-neutral-500 dark:text-neutral-400 ml-1">{{ output.unit }}</span>
                     </div>
-                    <div v-if="output?.type === 'string' && output.name === 'category'" class="text-xs text-neutral-500 mt-1">
+                    <div v-if="output?.type === 'string' && output.name === 'category'" class="text-xs text-neutral-500 dark:text-neutral-400 mt-1">
                       {{ getCategoryDescription(result[output.name]) }}
                     </div>
                   </span>
@@ -482,10 +482,10 @@ defineExpose({
           
           <!-- Fallback: Show all result values if outputs array is empty or malformed -->
           <div v-if="(!manifest?.outputs || manifest.outputs.length === 0) && result" 
-               class="bg-white rounded-lg p-6 border border-neutral-200">
+               class="bg-white dark:bg-gradient-to-br dark:from-neutral-800 dark:to-neutral-900 rounded-lg p-6 border border-neutral-200 dark:border-neutral-600 shadow-sm dark:shadow-lg dark:shadow-neutral-900/50">
             <div v-for="(value, key) in result" :key="key" class="flex items-center justify-between mb-2 last:mb-0">
-              <span class="text-sm font-medium text-neutral-600">{{ key }}</span>
-              <span class="text-2xl font-bold text-accent-600">
+              <span class="text-sm font-medium text-neutral-600 dark:text-neutral-300">{{ key }}</span>
+              <span class="text-2xl font-bold text-accent-600 dark:text-accent-400">
                 {{ typeof value === 'number' ? value.toFixed(2) : value }}
               </span>
             </div>
@@ -509,7 +509,7 @@ defineExpose({
 
 <style scoped>
 .form-label {
-  @apply block text-sm font-medium text-gray-700 mb-2;
+  @apply block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2;
 }
 
 .form-input {

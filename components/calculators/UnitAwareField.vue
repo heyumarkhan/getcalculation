@@ -256,7 +256,7 @@ onMounted(() => {
 }
 
 .field-label {
-  @apply block text-sm font-medium text-gray-700 mb-2;
+  @apply block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2;
 }
 
 .required-indicator {
@@ -264,7 +264,7 @@ onMounted(() => {
 }
 
 .field-description {
-  @apply block text-xs text-gray-500 font-normal mt-1;
+  @apply block text-xs text-gray-500 dark:text-gray-400 font-normal mt-1;
 }
 
 .input-container {
@@ -316,7 +316,7 @@ onMounted(() => {
 }
 
 .field-help {
-  @apply mt-2 text-sm text-gray-500;
+  @apply mt-2 text-sm text-gray-500 dark:text-gray-400;
 }
 
 /* Focus states */

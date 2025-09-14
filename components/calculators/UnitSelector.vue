@@ -332,7 +332,7 @@ onUnmounted(() => {
 }
 
 .unit-text {
-  @apply text-sm font-medium text-gray-700 min-w-0;
+  @apply text-sm font-medium text-gray-700 dark:text-gray-300 min-w-0;
 }
 
 .unit-dropdown-arrow {
@@ -349,7 +349,7 @@ onUnmounted(() => {
 }
 
 .unit-option {
-  @apply w-full px-3 py-2 text-left text-sm text-gray-700 hover:bg-gray-50 focus:outline-none focus:bg-gray-50 flex items-center justify-between transition-colors duration-150;
+  @apply w-full px-3 py-2 text-left text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 focus:outline-none focus:bg-gray-50 dark:focus:bg-gray-700 flex items-center justify-between transition-colors duration-150;
 }
 
 .unit-option.is-selected {
@@ -361,7 +361,7 @@ onUnmounted(() => {
 }
 
 .unit-label {
-  @apply ml-2 text-gray-500;
+  @apply ml-2 text-gray-500 dark:text-gray-400;
 }
 
 .unit-check-icon {
@@ -383,7 +383,7 @@ onUnmounted(() => {
 }
 
 .unit-toggle-button {
-  @apply flex-1 px-3 py-2 text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-accent-500 focus:z-10 border-r border-gray-300 last:border-r-0 transition-colors duration-150;
+  @apply flex-1 px-3 py-2 text-sm font-medium text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-accent-500 focus:z-10 border-r border-gray-300 dark:border-gray-600 last:border-r-0 transition-colors duration-150;
 }
 
 .unit-toggle-button.is-active {
@@ -408,7 +408,7 @@ onUnmounted(() => {
 }
 
 .unit-radio-label {
-  @apply flex items-center text-sm text-gray-700;
+  @apply flex items-center text-sm text-gray-700 dark:text-gray-300;
 }
 
 /* Size Variants */
@@ -457,18 +457,5 @@ onUnmounted(() => {
   }
 }
 
-/* Dark mode support (if needed) */
-@media (prefers-color-scheme: dark) {
-  .unit-selector-trigger {
-    @apply bg-gray-800 border-gray-600 text-gray-200;
-  }
-  
-  .unit-dropdown-menu {
-    @apply bg-gray-800 border-gray-600;
-  }
-  
-  .unit-option {
-    @apply text-gray-200 hover:bg-gray-700;
-  }
-}
+/* Dark mode styles are now handled by Tailwind's dark: prefix */
 </style>
