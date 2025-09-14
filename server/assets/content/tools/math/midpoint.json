@@ -1,0 +1,240 @@
+{
+  "toolName": "Midpoint Calculator",
+  "toolSlug": "midpoint",
+  "categorySlug": "math",
+  "description": "Find the midpoint between two points on a coordinate plane. Calculate the exact center point using the midpoint formula with step-by-step solutions.",
+  "calculationLogic": "MIDPOINT",
+  
+  "sections": [
+    {
+      "id": "point-coordinates",
+      "title": "Point Coordinates",
+      "description": "Enter the coordinates for both points to find their midpoint",
+      "required": true,
+      "order": 1,
+      "collapsible": false,
+      "fields": [
+        {
+          "name": "x1",
+          "label": "Point 1 - X Coordinate",
+          "type": "number",
+          "required": true,
+          "step": 0.001,
+          "placeholder": "Enter x₁ coordinate",
+          "unit": "",
+          "validation": {
+            "message": "X₁ coordinate must be a valid number"
+          },
+          "helpText": "The x-coordinate of the first point (x₁, y₁)"
+        },
+        {
+          "name": "y1",
+          "label": "Point 1 - Y Coordinate",
+          "type": "number",
+          "required": true,
+          "step": 0.001,
+          "placeholder": "Enter y₁ coordinate",
+          "unit": "",
+          "validation": {
+            "message": "Y₁ coordinate must be a valid number"
+          },
+          "helpText": "The y-coordinate of the first point (x₁, y₁)"
+        },
+        {
+          "name": "x2",
+          "label": "Point 2 - X Coordinate",
+          "type": "number",
+          "required": true,
+          "step": 0.001,
+          "placeholder": "Enter x₂ coordinate",
+          "unit": "",
+          "validation": {
+            "message": "X₂ coordinate must be a valid number"
+          },
+          "helpText": "The x-coordinate of the second point (x₂, y₂)"
+        },
+        {
+          "name": "y2",
+          "label": "Point 2 - Y Coordinate",
+          "type": "number",
+          "required": true,
+          "step": 0.001,
+          "placeholder": "Enter y₂ coordinate",
+          "unit": "",
+          "validation": {
+            "message": "Y₂ coordinate must be a valid number"
+          },
+          "helpText": "The y-coordinate of the second point (x₂, y₂)"
+        }
+      ]
+    }
+  ],
+  
+  "outputs": [
+    {
+      "name": "midpointX",
+      "label": "Midpoint X-Coordinate",
+      "type": "number",
+      "precision": 6,
+      "unit": "",
+      "section": "primary",
+      "description": "The x-coordinate of the midpoint"
+    },
+    {
+      "name": "midpointY",
+      "label": "Midpoint Y-Coordinate",
+      "type": "number",
+      "precision": 6,
+      "unit": "",
+      "section": "primary",
+      "description": "The y-coordinate of the midpoint"
+    },
+    {
+      "name": "midpointCoordinates",
+      "label": "Midpoint Coordinates",
+      "type": "text",
+      "section": "primary",
+      "description": "The midpoint as coordinate pair (x, y)"
+    },
+    {
+      "name": "distanceBetweenPoints",
+      "label": "Distance Between Points",
+      "type": "number",
+      "precision": 6,
+      "unit": "",
+      "section": "secondary",
+      "description": "The distance between the two original points"
+    }
+  ],
+  
+  "examples": [
+    {
+      "title": "Basic Example",
+      "description": "Find the midpoint between (2, 4) and (8, 10)",
+      "inputs": {
+        "x1": 2,
+        "y1": 4,
+        "x2": 8,
+        "y2": 10
+      },
+      "explanation": "Midpoint = ((2+8)/2, (4+10)/2) = (5, 7)"
+    },
+    {
+      "title": "Negative Coordinates",
+      "description": "Find the midpoint between (-3, -1) and (5, 7)",
+      "inputs": {
+        "x1": -3,
+        "y1": -1,
+        "x2": 5,
+        "y2": 7
+      },
+      "explanation": "Midpoint = ((-3+5)/2, (-1+7)/2) = (1, 3)"
+    },
+    {
+      "title": "Decimal Coordinates",
+      "description": "Find the midpoint between (1.5, 2.5) and (4.5, 6.5)",
+      "inputs": {
+        "x1": 1.5,
+        "y1": 2.5,
+        "x2": 4.5,
+        "y2": 6.5
+      },
+      "explanation": "Midpoint = ((1.5+4.5)/2, (2.5+6.5)/2) = (3, 4.5)"
+    }
+  ],
+  
+  "seo": {
+    "title": "Midpoint Calculator | Find Midpoint Between Two Points Online",
+    "metaDescription": "Calculate the midpoint between two points instantly with our free midpoint calculator. Get step-by-step solutions using the midpoint formula.",
+    "keywords": [
+      "midpoint calculator",
+      "midpoint formula",
+      "find midpoint between two points",
+      "coordinate geometry calculator",
+      "midpoint of line segment",
+      "midpoint formula calculator",
+      "geometry calculator",
+      "coordinate plane calculator",
+      "midpoint between points",
+      "line segment midpoint",
+      "coordinate midpoint calculator",
+      "geometric midpoint"
+    ]
+  },
+
+  "content": {
+    "howItWorks": {
+      "title": "How to Calculate the Midpoint Between Two Points",
+      "description": "The midpoint formula finds the exact center point between two coordinates. It averages the x-coordinates and y-coordinates separately to find the midpoint coordinates.",
+      "formula": "M = ((x₁ + x₂)/2, (y₁ + y₂)/2)",
+      "variables": [
+        { "symbol": "M", "name": "Midpoint", "description": "The coordinates of the midpoint" },
+        { "symbol": "x₁, y₁", "name": "First Point", "description": "Coordinates of the first point" },
+        { "symbol": "x₂, y₂", "name": "Second Point", "description": "Coordinates of the second point" },
+        { "symbol": "(x₁ + x₂)/2", "name": "X-coordinate", "description": "Average of the x-coordinates" },
+        { "symbol": "(y₁ + y₂)/2", "name": "Y-coordinate", "description": "Average of the y-coordinates" }
+      ]
+    },
+    "useCases": [
+      {
+        "title": "Geometry Problems",
+        "description": "Find centers of line segments, diagonals of rectangles, and midpoints in geometric constructions."
+      },
+      {
+        "title": "Coordinate Geometry",
+        "description": "Solve problems involving coordinate planes, graphing, and analytical geometry."
+      },
+      {
+        "title": "Computer Graphics",
+        "description": "Calculate center points for animations, positioning elements, and graphic design."
+      },
+      {
+        "title": "Navigation & GPS",
+        "description": "Find halfway points between locations for meeting spots or route planning."
+      }
+    ],
+    "tips": [
+      "The midpoint formula works for any two points, regardless of their position on the coordinate plane",
+      "Remember to add coordinates first, then divide by 2 - don't divide each coordinate separately",
+      "Midpoints of negative coordinates follow the same formula - just be careful with signs",
+      "The midpoint is always exactly halfway between the two original points",
+      "You can verify your answer by checking that the distance from each original point to the midpoint is equal",
+      "For fractions, convert to decimals or find a common denominator for easier calculation"
+    ],
+    "examples": [
+      {
+        "title": "Simple Integer Coordinates",
+        "scenario": "Find the midpoint between (2, 4) and (8, 10)",
+        "calculation": "M = ((2+8)/2, (4+10)/2) = (10/2, 14/2) = (5, 7)",
+        "result": "Midpoint: (5, 7)"
+      },
+      {
+        "title": "Mixed Positive and Negative",
+        "scenario": "Find the midpoint between (-3, -1) and (5, 7)",
+        "calculation": "M = ((-3+5)/2, (-1+7)/2) = (2/2, 6/2) = (1, 3)",
+        "result": "Midpoint: (1, 3)"
+      },
+      {
+        "title": "Decimal Coordinates",
+        "scenario": "Find the midpoint between (1.5, 2.5) and (4.5, 6.5)",
+        "calculation": "M = ((1.5+4.5)/2, (2.5+6.5)/2) = (6/2, 9/2) = (3, 4.5)",
+        "result": "Midpoint: (3, 4.5)"
+      }
+    ]
+  },
+
+  "relatedCalculators": [
+    {
+      "name": "Distance Between Points Calculator",
+      "slug": "distance-between-points",
+      "category": "math"
+    },
+    {
+      "name": "Standard Form to Slope Intercept Form Calculator",
+      "slug": "standard-form-to-slope-intercept",
+      "category": "math"
+    }
+  ],
+  
+  "pSEODataset": "/datasets/math/midpoint-data.csv"
+}
