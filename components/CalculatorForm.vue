@@ -22,7 +22,8 @@ watch(() => props.manifest, (newManifest) => {
       newManifest.sections.forEach(section => {
         section.fields.forEach(field => {
           if (!(field.name in formState)) {
-            formState[field.name] = null;
+            // Set default value for select fields or use null
+            formState[field.name] = field.defaultValue || null;
           }
           // Initialize unit state for unit-aware fields
           if (field.units && !(field.name + 'Unit' in formState)) {
@@ -265,6 +266,19 @@ function handleFieldBlur(fieldName, value, field) {
   validateField(fieldName, value, field);
 }
 
+// Check if a section should be displayed based on conditional display rules
+function shouldShowSection(section) {
+  // If no conditional display is specified, always show the section
+  if (!section.conditionalDisplay) {
+    return true;
+  }
+
+  const { field, value } = section.conditionalDisplay;
+  
+  // Check if the controlling field's value matches the required value
+  return formState[field] === value;
+}
+
 defineExpose({
   performCalculation,
   setFormState
@@ -277,7 +291,12 @@ defineExpose({
     <form @submit.prevent="performCalculation" class="mb-8">
       <!-- New Section-Based Format -->
       <div v-if="manifest && manifest.sections" class="space-y-8">
-        <div v-for="section in manifest.sections" :key="section.id" class="section-group">
+        <div 
+          v-for="section in manifest.sections" 
+          :key="section.id" 
+          v-show="shouldShowSection(section)"
+          class="section-group"
+        >
           <!-- Section Header -->
           <div class="section-header mb-4">
             <h3 class="text-lg font-semibold text-gray-900">{{ section.title }}</h3>
@@ -332,7 +351,33 @@ defineExpose({
                   <span v-if="field.required" class="text-red-500 ml-1">*</span>
                   <span v-if="field.unit" class="text-neutral-500 font-normal">({{ field.unit }})</span>
                 </label>
+                
+                <!-- Select Dropdown -->
+                <select
+                  v-if="field.type === 'select'"
+                  :id="field.name"
+                  :value="formState[field.name]"
+                  class="form-input"
+                  :class="{ 
+                    'border-red-300 focus:border-red-500 focus:ring-red-500': fieldErrors[field.name],
+                    'border-green-300 focus:border-green-500 focus:ring-green-500': !fieldErrors[field.name] && formState[field.name]
+                  }"
+                  @change="handleFieldInput(field.name, $event.target.value, field)"
+                  @blur="handleFieldBlur(field.name, $event.target.value, field)"
+                >
+                  <option value="" disabled>{{ field.placeholder || 'Select an option' }}</option>
+                  <option
+                    v-for="option in field.options"
+                    :key="option.value"
+                    :value="option.value"
+                  >
+                    {{ option.label }}
+                  </option>
+                </select>
+                
+                <!-- Regular Input -->
                 <input
+                  v-else
                   :id="field.name"
                   :value="formState[field.name]"
                   :type="field.type"
@@ -348,6 +393,7 @@ defineExpose({
                   @input="handleFieldInput(field.name, $event.target.value, field)"
                   @blur="handleFieldBlur(field.name, $event.target.value, field)"
                 />
+                
                 <!-- Field Error Message -->
                 <div v-if="fieldErrors[field.name]" class="field-error-message">
                   {{ fieldErrors[field.name] }}

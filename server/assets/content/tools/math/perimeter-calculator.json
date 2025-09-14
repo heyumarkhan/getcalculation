@@ -1,0 +1,415 @@
+{
+  "toolName": "Perimeter Calculator",
+  "toolSlug": "perimeter-calculator",
+  "categorySlug": "math",
+  "description": "Calculate the perimeter of various geometric shapes including rectangles, squares, circles, triangles, and polygons. Get instant results with step-by-step explanations.",
+  "calculationLogic": "PERIMETER_CALCULATOR",
+  
+  "sections": [
+    {
+      "id": "shape-selection",
+      "title": "Shape Selection",
+      "description": "Choose the geometric shape to calculate the perimeter",
+      "required": true,
+      "order": 1,
+      "collapsible": false,
+      "fields": [
+        {
+          "name": "shapeType",
+          "label": "Shape Type",
+          "type": "select",
+          "required": true,
+          "options": [
+            { "value": "rectangle", "label": "Rectangle" },
+            { "value": "square", "label": "Square" },
+            { "value": "circle", "label": "Circle" },
+            { "value": "triangle", "label": "Triangle" },
+            { "value": "regular-polygon", "label": "Regular Polygon" },
+            { "value": "parallelogram", "label": "Parallelogram" },
+            { "value": "rhombus", "label": "Rhombus" },
+            { "value": "trapezoid", "label": "Trapezoid" }
+          ],
+          "defaultValue": "rectangle",
+          "helpText": "Select the type of shape for perimeter calculation"
+        }
+      ]
+    },
+    {
+      "id": "rectangle-dimensions",
+      "title": "Rectangle Dimensions",
+      "description": "Enter the length and width of the rectangle",
+      "required": false,
+      "order": 2,
+      "collapsible": false,
+      "conditionalDisplay": {
+        "field": "shapeType",
+        "value": "rectangle"
+      },
+      "fields": [
+        {
+          "name": "length",
+          "label": "Length",
+          "type": "number",
+          "required": false,
+          "min": 0.001,
+          "step": 0.001,
+          "placeholder": "Enter length",
+          "unit": "units",
+          "validation": {
+            "message": "Length must be a positive number"
+          },
+          "helpText": "The longer side of the rectangle"
+        },
+        {
+          "name": "width",
+          "label": "Width",
+          "type": "number",
+          "required": false,
+          "min": 0.001,
+          "step": 0.001,
+          "placeholder": "Enter width",
+          "unit": "units",
+          "validation": {
+            "message": "Width must be a positive number"
+          },
+          "helpText": "The shorter side of the rectangle"
+        }
+      ]
+    },
+    {
+      "id": "square-dimensions",
+      "title": "Square Dimensions",
+      "description": "Enter the side length of the square",
+      "required": false,
+      "order": 3,
+      "collapsible": false,
+      "conditionalDisplay": {
+        "field": "shapeType",
+        "value": "square"
+      },
+      "fields": [
+        {
+          "name": "side",
+          "label": "Side Length",
+          "type": "number",
+          "required": false,
+          "min": 0.001,
+          "step": 0.001,
+          "placeholder": "Enter side length",
+          "unit": "units",
+          "validation": {
+            "message": "Side length must be a positive number"
+          },
+          "helpText": "The length of each side of the square"
+        }
+      ]
+    },
+    {
+      "id": "circle-dimensions",
+      "title": "Circle Dimensions",
+      "description": "Enter the radius or diameter of the circle",
+      "required": false,
+      "order": 4,
+      "collapsible": false,
+      "conditionalDisplay": {
+        "field": "shapeType",
+        "value": "circle"
+      },
+      "fields": [
+        {
+          "name": "radius",
+          "label": "Radius",
+          "type": "number",
+          "required": false,
+          "min": 0.001,
+          "step": 0.001,
+          "placeholder": "Enter radius",
+          "unit": "units",
+          "validation": {
+            "message": "Radius must be a positive number"
+          },
+          "helpText": "The radius of the circle (distance from center to edge)"
+        },
+        {
+          "name": "diameter",
+          "label": "Diameter (Alternative)",
+          "type": "number",
+          "required": false,
+          "min": 0.001,
+          "step": 0.001,
+          "placeholder": "Enter diameter",
+          "unit": "units",
+          "validation": {
+            "message": "Diameter must be a positive number"
+          },
+          "helpText": "The diameter of the circle (distance across through center). Use either radius OR diameter."
+        }
+      ]
+    },
+    {
+      "id": "triangle-dimensions",
+      "title": "Triangle Dimensions",
+      "description": "Enter the side lengths of the triangle",
+      "required": false,
+      "order": 5,
+      "collapsible": false,
+      "conditionalDisplay": {
+        "field": "shapeType",
+        "value": "triangle"
+      },
+      "fields": [
+        {
+          "name": "sideA",
+          "label": "Side A",
+          "type": "number",
+          "required": false,
+          "min": 0.001,
+          "step": 0.001,
+          "placeholder": "Enter side A length",
+          "unit": "units",
+          "validation": {
+            "message": "Side A must be a positive number"
+          },
+          "helpText": "Length of the first side"
+        },
+        {
+          "name": "sideB",
+          "label": "Side B",
+          "type": "number",
+          "required": false,
+          "min": 0.001,
+          "step": 0.001,
+          "placeholder": "Enter side B length",
+          "unit": "units",
+          "validation": {
+            "message": "Side B must be a positive number"
+          },
+          "helpText": "Length of the second side"
+        },
+        {
+          "name": "sideC",
+          "label": "Side C",
+          "type": "number",
+          "required": false,
+          "min": 0.001,
+          "step": 0.001,
+          "placeholder": "Enter side C length",
+          "unit": "units",
+          "validation": {
+            "message": "Side C must be a positive number"
+          },
+          "helpText": "Length of the third side"
+        }
+      ]
+    },
+    {
+      "id": "polygon-dimensions",
+      "title": "Regular Polygon Dimensions",
+      "description": "Enter the number of sides and side length",
+      "required": false,
+      "order": 6,
+      "collapsible": false,
+      "conditionalDisplay": {
+        "field": "shapeType",
+        "value": "regular-polygon"
+      },
+      "fields": [
+        {
+          "name": "numberOfSides",
+          "label": "Number of Sides",
+          "type": "number",
+          "required": false,
+          "min": 3,
+          "max": 100,
+          "step": 1,
+          "placeholder": "Enter number of sides",
+          "validation": {
+            "message": "Number of sides must be at least 3"
+          },
+          "helpText": "The number of equal sides in the polygon"
+        },
+        {
+          "name": "sideLength",
+          "label": "Side Length",
+          "type": "number",
+          "required": false,
+          "min": 0.001,
+          "step": 0.001,
+          "placeholder": "Enter side length",
+          "unit": "units",
+          "validation": {
+            "message": "Side length must be a positive number"
+          },
+          "helpText": "The length of each side of the regular polygon"
+        }
+      ]
+    }
+  ],
+  
+  "outputs": [
+    {
+      "name": "perimeter",
+      "label": "Perimeter",
+      "type": "number",
+      "precision": 6,
+      "unit": "units",
+      "section": "primary",
+      "description": "The total distance around the shape"
+    },
+    {
+      "name": "formula",
+      "label": "Formula Used",
+      "type": "text",
+      "section": "primary",
+      "description": "The mathematical formula used for calculation"
+    },
+    {
+      "name": "calculation",
+      "label": "Calculation Steps",
+      "type": "text",
+      "section": "secondary",
+      "description": "Step-by-step calculation breakdown"
+    },
+    {
+      "name": "shapeInfo",
+      "label": "Shape Information",
+      "type": "text",
+      "section": "secondary",
+      "description": "Additional information about the shape"
+    },
+    {
+      "name": "perimeterInWords",
+      "label": "Perimeter in Words",
+      "type": "text",
+      "section": "secondary",
+      "description": "The perimeter value expressed in words"
+    }
+  ],
+  
+  "examples": [
+    {
+      "title": "Rectangle Perimeter",
+      "description": "Calculate perimeter of a rectangle with length 8 and width 5",
+      "inputs": {
+        "shapeType": "rectangle",
+        "length": 8,
+        "width": 5
+      },
+      "explanation": "Perimeter = 2 × (length + width) = 2 × (8 + 5) = 26 units"
+    },
+    {
+      "title": "Circle Circumference",
+      "description": "Calculate circumference of a circle with radius 7",
+      "inputs": {
+        "shapeType": "circle",
+        "radius": 7
+      },
+      "explanation": "Circumference = 2πr = 2 × π × 7 ≈ 43.98 units"
+    },
+    {
+      "title": "Triangle Perimeter",
+      "description": "Calculate perimeter of a triangle with sides 3, 4, 5",
+      "inputs": {
+        "shapeType": "triangle",
+        "sideA": 3,
+        "sideB": 4,
+        "sideC": 5
+      },
+      "explanation": "Perimeter = side A + side B + side C = 3 + 4 + 5 = 12 units"
+    }
+  ],
+  
+  "seo": {
+    "title": "Perimeter Calculator | Calculate Perimeter of Any Shape Online",
+    "metaDescription": "Calculate the perimeter of rectangles, squares, circles, triangles, and polygons instantly. Free online perimeter calculator with step-by-step solutions and formulas.",
+    "keywords": [
+      "perimeter calculator",
+      "circumference calculator",
+      "rectangle perimeter",
+      "circle perimeter",
+      "triangle perimeter",
+      "square perimeter",
+      "polygon perimeter",
+      "perimeter formula",
+      "geometry calculator",
+      "shape perimeter",
+      "math calculator",
+      "perimeter solver"
+    ]
+  },
+
+  "content": {
+    "howItWorks": {
+      "title": "How to Calculate Perimeter of Different Shapes",
+      "description": "Perimeter is the total distance around the outside of a two-dimensional shape. Each geometric shape has its own specific formula for calculating perimeter.",
+      "formulas": [
+        { "shape": "Rectangle", "formula": "P = 2(l + w)", "description": "Where l = length, w = width" },
+        { "shape": "Square", "formula": "P = 4s", "description": "Where s = side length" },
+        { "shape": "Circle", "formula": "P = 2πr or πd", "description": "Where r = radius, d = diameter (circumference)" },
+        { "shape": "Triangle", "formula": "P = a + b + c", "description": "Where a, b, c = side lengths" },
+        { "shape": "Regular Polygon", "formula": "P = n × s", "description": "Where n = number of sides, s = side length" }
+      ]
+    },
+    "useCases": [
+      {
+        "title": "Construction & Architecture",
+        "description": "Calculate material requirements for fencing, framing, and border installations around buildings and properties."
+      },
+      {
+        "title": "Landscaping & Gardening",
+        "description": "Determine the amount of edging, fencing, or border materials needed for garden beds, lawns, and outdoor spaces."
+      },
+      {
+        "title": "Education & Learning",
+        "description": "Solve geometry homework problems and understand perimeter concepts in mathematics education."
+      },
+      {
+        "title": "Arts & Crafts",
+        "description": "Calculate trim, border, or frame materials needed for art projects, picture frames, and decorative elements."
+      }
+    ],
+    "tips": [
+      "Always use consistent units when measuring (all in inches, feet, meters, etc.)",
+      "For circles, remember that circumference is the perimeter of a circular shape",
+      "Double-check your measurements to ensure accurate calculations",
+      "For irregular shapes, break them down into simpler geometric shapes",
+      "Use π ≈ 3.14159 for more precise circle calculations",
+      "Regular polygons have all sides equal in length"
+    ],
+    "examples": [
+      {
+        "title": "Rectangular Garden",
+        "scenario": "Calculate fencing needed for a rectangular garden 12 feet long and 8 feet wide",
+        "calculation": "P = 2(l + w) = 2(12 + 8) = 2(20) = 40 feet",
+        "result": "You need 40 feet of fencing material"
+      },
+      {
+        "title": "Circular Pool",
+        "scenario": "Find the circumference of a circular pool with 10-foot radius",
+        "calculation": "P = 2πr = 2 × π × 10 ≈ 62.83 feet",
+        "result": "The pool's circumference is approximately 62.83 feet"
+      },
+      {
+        "title": "Triangle Flower Bed",
+        "scenario": "Calculate edging for a triangular flower bed with sides 6, 8, and 10 feet",
+        "calculation": "P = a + b + c = 6 + 8 + 10 = 24 feet",
+        "result": "You need 24 feet of edging material"
+      }
+    ]
+  },
+
+  "relatedCalculators": [
+    {
+      "name": "Area Calculator",
+      "slug": "area-calculator",
+      "category": "math"
+    },
+    {
+      "name": "Volume Calculator",
+      "slug": "volume-calculator",
+      "category": "math"
+    }
+  ],
+  
+  "pSEODataset": "/datasets/math/perimeter-calculator-data.csv"
+}
