@@ -1,0 +1,240 @@
+{
+  "toolName": "Length of a Line Segment Calculator",
+  "toolSlug": "length-of-a-line-segment",
+  "categorySlug": "math",
+  "description": "Calculate the length of a line segment between two points using the distance formula. Find the exact distance between any two coordinates on a plane.",
+  "calculationLogic": "LENGTH_OF_A_LINE_SEGMENT",
+  
+  "sections": [
+    {
+      "id": "point-coordinates",
+      "title": "Point Coordinates",
+      "description": "Enter the coordinates for both endpoints of the line segment",
+      "required": true,
+      "order": 1,
+      "collapsible": false,
+      "fields": [
+        {
+          "name": "x1",
+          "label": "Point 1 - X Coordinate",
+          "type": "number",
+          "required": true,
+          "step": 0.001,
+          "placeholder": "Enter x₁ coordinate",
+          "unit": "",
+          "validation": {
+            "message": "X₁ coordinate must be a valid number"
+          },
+          "helpText": "The x-coordinate of the first endpoint (x₁, y₁)"
+        },
+        {
+          "name": "y1",
+          "label": "Point 1 - Y Coordinate",
+          "type": "number",
+          "required": true,
+          "step": 0.001,
+          "placeholder": "Enter y₁ coordinate",
+          "unit": "",
+          "validation": {
+            "message": "Y₁ coordinate must be a valid number"
+          },
+          "helpText": "The y-coordinate of the first endpoint (x₁, y₁)"
+        },
+        {
+          "name": "x2",
+          "label": "Point 2 - X Coordinate",
+          "type": "number",
+          "required": true,
+          "step": 0.001,
+          "placeholder": "Enter x₂ coordinate",
+          "unit": "",
+          "validation": {
+            "message": "X₂ coordinate must be a valid number"
+          },
+          "helpText": "The x-coordinate of the second endpoint (x₂, y₂)"
+        },
+        {
+          "name": "y2",
+          "label": "Point 2 - Y Coordinate",
+          "type": "number",
+          "required": true,
+          "step": 0.001,
+          "placeholder": "Enter y₂ coordinate",
+          "unit": "",
+          "validation": {
+            "message": "Y₂ coordinate must be a valid number"
+          },
+          "helpText": "The y-coordinate of the second endpoint (x₂, y₂)"
+        }
+      ]
+    }
+  ],
+  
+  "outputs": [
+    {
+      "name": "lineSegmentLength",
+      "label": "Line Segment Length",
+      "type": "number",
+      "precision": 6,
+      "unit": "units",
+      "section": "primary",
+      "description": "The length of the line segment between the two points"
+    },
+    {
+      "name": "horizontalDistance",
+      "label": "Horizontal Distance (Δx)",
+      "type": "number",
+      "precision": 6,
+      "unit": "units",
+      "section": "secondary",
+      "description": "The horizontal distance between the points"
+    },
+    {
+      "name": "verticalDistance",
+      "label": "Vertical Distance (Δy)",
+      "type": "number",
+      "precision": 6,
+      "unit": "units",
+      "section": "secondary",
+      "description": "The vertical distance between the points"
+    },
+    {
+      "name": "coordinateDisplay",
+      "label": "Points",
+      "type": "text",
+      "section": "secondary",
+      "description": "The coordinates of both endpoints"
+    }
+  ],
+  
+  "examples": [
+    {
+      "title": "Classic 3-4-5 Triangle",
+      "description": "Find the length between (0, 0) and (3, 4)",
+      "inputs": {
+        "x1": 0,
+        "y1": 0,
+        "x2": 3,
+        "y2": 4
+      },
+      "explanation": "Length = √[(3-0)² + (4-0)²] = √[9 + 16] = √25 = 5"
+    },
+    {
+      "title": "Negative Coordinates",
+      "description": "Find the length between (-2, -1) and (4, 7)",
+      "inputs": {
+        "x1": -2,
+        "y1": -1,
+        "x2": 4,
+        "y2": 7
+      },
+      "explanation": "Length = √[(4-(-2))² + (7-(-1))²] = √[36 + 64] = √100 = 10"
+    },
+    {
+      "title": "Decimal Coordinates",
+      "description": "Find the length between (1.5, 2.5) and (4.5, 6.5)",
+      "inputs": {
+        "x1": 1.5,
+        "y1": 2.5,
+        "x2": 4.5,
+        "y2": 6.5
+      },
+      "explanation": "Length = √[(4.5-1.5)² + (6.5-2.5)²] = √[9 + 16] = √25 = 5"
+    }
+  ],
+  
+  "seo": {
+    "title": "Length of a Line Segment Calculator | Distance Between Two Points",
+    "metaDescription": "Calculate the length of a line segment between two points using the distance formula. Free online calculator with step-by-step solutions and examples.",
+    "keywords": [
+      "length of a line segment calculator",
+      "distance between two points",
+      "line segment length",
+      "distance formula calculator",
+      "coordinate distance calculator",
+      "length between points",
+      "geometric distance calculator",
+      "pythagorean distance",
+      "line segment distance",
+      "euclidean distance calculator",
+      "distance formula",
+      "coordinate geometry calculator"
+    ]
+  },
+
+  "content": {
+    "howItWorks": {
+      "title": "How to Calculate the Length of a Line Segment",
+      "description": "The length of a line segment is calculated using the distance formula, which is derived from the Pythagorean theorem. It measures the straight-line distance between two points on a coordinate plane.",
+      "formula": "d = √[(x₂ - x₁)² + (y₂ - y₁)²]",
+      "variables": [
+        { "symbol": "d", "name": "Distance", "description": "The length of the line segment" },
+        { "symbol": "x₁, y₁", "name": "First Point", "description": "Coordinates of the first endpoint" },
+        { "symbol": "x₂, y₂", "name": "Second Point", "description": "Coordinates of the second endpoint" },
+        { "symbol": "Δx", "name": "Horizontal Change", "description": "x₂ - x₁ (change in x-coordinates)" },
+        { "symbol": "Δy", "name": "Vertical Change", "description": "y₂ - y₁ (change in y-coordinates)" }
+      ]
+    },
+    "useCases": [
+      {
+        "title": "Geometry Problems",
+        "description": "Calculate lengths of sides in triangles, rectangles, and other geometric shapes on coordinate planes."
+      },
+      {
+        "title": "Engineering & Architecture",
+        "description": "Measure distances in blueprints, technical drawings, and construction plans."
+      },
+      {
+        "title": "Computer Graphics",
+        "description": "Calculate distances for animations, game development, and graphic design applications."
+      },
+      {
+        "title": "Navigation & Mapping",
+        "description": "Determine straight-line distances between locations on maps or GPS coordinates."
+      }
+    ],
+    "tips": [
+      "The distance formula is based on the Pythagorean theorem: a² + b² = c²",
+      "Order of points doesn't matter - distance from A to B equals distance from B to A",
+      "The formula works for any two points, regardless of their position on the coordinate plane",
+      "Negative coordinates follow the same formula - just be careful with the subtraction",
+      "For horizontal or vertical lines, one of the differences will be zero, simplifying the calculation",
+      "The result is always positive since we're calculating a distance (length)"
+    ],
+    "examples": [
+      {
+        "title": "Classic Pythagorean Example",
+        "scenario": "Find the length between (0, 0) and (3, 4)",
+        "calculation": "d = √[(3-0)² + (4-0)²] = √[9 + 16] = √25 = 5",
+        "result": "Length: 5 units"
+      },
+      {
+        "title": "Mixed Positive and Negative",
+        "scenario": "Find the length between (-2, -1) and (4, 7)",
+        "calculation": "d = √[(4-(-2))² + (7-(-1))²] = √[6² + 8²] = √[36 + 64] = √100 = 10",
+        "result": "Length: 10 units"
+      },
+      {
+        "title": "Decimal Coordinates",
+        "scenario": "Find the length between (1.5, 2.5) and (4.5, 6.5)",
+        "calculation": "d = √[(4.5-1.5)² + (6.5-2.5)²] = √[3² + 4²] = √[9 + 16] = √25 = 5",
+        "result": "Length: 5 units"
+      }
+    ]
+  },
+
+  "relatedCalculators": [
+    {
+      "name": "Midpoint Calculator",
+      "slug": "midpoint",
+      "category": "math"
+    },
+    {
+      "name": "Standard Form to Slope Intercept Form Calculator",
+      "slug": "standard-form-to-slope-intercept",
+      "category": "math"
+    }
+  ],
+  
+  "pSEODataset": "/datasets/math/length-of-a-line-segment-data.csv"
+}
