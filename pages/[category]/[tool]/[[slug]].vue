@@ -145,14 +145,16 @@ const getCategoryBadgeClass = (categorySlug) => {
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
             </svg>
-            <NuxtLink :to="`/${category}`" class="hover:text-accent-600 transition-colors">{{ category }}</NuxtLink>
+            <NuxtLink :to="`/${category}`" class="hover:text-accent-600 transition-colors">
+              <span class="badge text-sm font-medium px-3 py-1 rounded-full" :class="getCategoryBadgeClass(category)">{{ category }}</span>
+            </NuxtLink>
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
             </svg>
             <span class="text-primary-700 dark:text-primary-300 font-medium">{{ manifest.toolName }}</span>
           </nav>
 
-          <!-- Category Badge -->
+          <!-- Category Badge
           <div class="inline-flex items-center space-x-2 mb-6">
             <div class="w-8 h-8 rounded-lg flex items-center justify-center text-lg"
                  :class="getCategoryIconClass(category)">
@@ -162,7 +164,7 @@ const getCategoryBadgeClass = (categorySlug) => {
                   :class="getCategoryBadgeClass(category)">
               {{ category }}
             </span>
-          </div>
+          </div> -->
 
           <!-- Title and Description -->
           <h1 class="text-4xl md:text-5xl font-bold text-primary-900 dark:text-primary-100 mb-6">
