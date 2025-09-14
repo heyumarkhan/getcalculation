@@ -1,0 +1,335 @@
+{
+  "toolName": "Similar Triangles Calculator",
+  "toolSlug": "similar-triangles",
+  "categorySlug": "math",
+  "description": "Calculate missing sides and angles of similar triangles using proportions. Find unknown measurements with step-by-step solutions.",
+  "calculationLogic": "SIMILAR_TRIANGLES_CALCULATOR",
+  
+  "sections": [
+    {
+      "id": "triangle-type",
+      "title": "Triangle Type",
+      "description": "Choose the calculation method for similar triangles",
+      "required": true,
+      "order": 1,
+      "collapsible": false,
+      "fields": [
+        {
+          "name": "calculationType",
+          "label": "Calculation Type",
+          "type": "select",
+          "required": true,
+          "options": [
+            { "value": "find-missing-side", "label": "Find Missing Side" },
+            { "value": "find-scale-factor", "label": "Find Scale Factor" },
+            { "value": "verify-similarity", "label": "Verify Similarity" }
+          ],
+          "defaultValue": "find-missing-side",
+          "helpText": "Select the type of similar triangle calculation you need"
+        }
+      ]
+    },
+    {
+      "id": "triangle-1",
+      "title": "First Triangle",
+      "description": "Enter the known measurements of the first triangle",
+      "required": false,
+      "order": 2,
+      "collapsible": false,
+      "fields": [
+        {
+          "name": "side1A",
+          "label": "Side A",
+          "type": "number",
+          "required": false,
+          "min": 0.001,
+          "step": 0.001,
+          "placeholder": "Enter side A length",
+          "unit": "units",
+          "validation": {
+            "message": "Side A must be a positive number"
+          },
+          "helpText": "Length of side A in the first triangle"
+        },
+        {
+          "name": "side1B",
+          "label": "Side B",
+          "type": "number",
+          "required": false,
+          "min": 0.001,
+          "step": 0.001,
+          "placeholder": "Enter side B length",
+          "unit": "units",
+          "validation": {
+            "message": "Side B must be a positive number"
+          },
+          "helpText": "Length of side B in the first triangle"
+        },
+        {
+          "name": "side1C",
+          "label": "Side C",
+          "type": "number",
+          "required": false,
+          "min": 0.001,
+          "step": 0.001,
+          "placeholder": "Enter side C length",
+          "unit": "units",
+          "validation": {
+            "message": "Side C must be a positive number"
+          },
+          "helpText": "Length of side C in the first triangle"
+        }
+      ]
+    },
+    {
+      "id": "triangle-2",
+      "title": "Second Triangle",
+      "description": "Enter the known measurements of the second triangle",
+      "required": false,
+      "order": 3,
+      "collapsible": false,
+      "fields": [
+        {
+          "name": "side2A",
+          "label": "Side A",
+          "type": "number",
+          "required": false,
+          "min": 0.001,
+          "step": 0.001,
+          "placeholder": "Enter side A length",
+          "unit": "units",
+          "validation": {
+            "message": "Side A must be a positive number"
+          },
+          "helpText": "Length of side A in the second triangle"
+        },
+        {
+          "name": "side2B",
+          "label": "Side B",
+          "type": "number",
+          "required": false,
+          "min": 0.001,
+          "step": 0.001,
+          "placeholder": "Enter side B length",
+          "unit": "units",
+          "validation": {
+            "message": "Side B must be a positive number"
+          },
+          "helpText": "Length of side B in the second triangle"
+        },
+        {
+          "name": "side2C",
+          "label": "Side C",
+          "type": "number",
+          "required": false,
+          "min": 0.001,
+          "step": 0.001,
+          "placeholder": "Enter side C length",
+          "unit": "units",
+          "validation": {
+            "message": "Side C must be a positive number"
+          },
+          "helpText": "Length of side C in the second triangle"
+        }
+      ]
+    },
+    {
+      "id": "missing-side-info",
+      "title": "Missing Side Information",
+      "description": "Specify which side is missing in the second triangle",
+      "required": false,
+      "order": 4,
+      "collapsible": false,
+      "conditionalDisplay": {
+        "field": "calculationType",
+        "value": "find-missing-side"
+      },
+      "fields": [
+        {
+          "name": "missingSide",
+          "label": "Missing Side",
+          "type": "select",
+          "required": false,
+          "options": [
+            { "value": "A", "label": "Side A" },
+            { "value": "B", "label": "Side B" },
+            { "value": "C", "label": "Side C" }
+          ],
+          "defaultValue": "A",
+          "helpText": "Select which side is missing in the second triangle"
+        }
+      ]
+    }
+  ],
+  
+  "outputs": [
+    {
+      "name": "result",
+      "label": "Result",
+      "type": "number",
+      "precision": 6,
+      "unit": "units",
+      "section": "primary",
+      "description": "The calculated missing side length or scale factor"
+    },
+    {
+      "name": "proportion",
+      "label": "Proportion Used",
+      "type": "text",
+      "section": "secondary",
+      "description": "The mathematical proportion used for calculation"
+    },
+    {
+      "name": "scaleFactor",
+      "label": "Scale Factor",
+      "type": "number",
+      "precision": 6,
+      "section": "secondary",
+      "description": "The scale factor between the triangles"
+    },
+    {
+      "name": "similarityStatus",
+      "label": "Similarity Status",
+      "type": "text",
+      "section": "secondary",
+      "description": "Whether the triangles are similar or not"
+    }
+  ],
+  
+  "examples": [
+    {
+      "title": "Find Missing Side",
+      "description": "Triangle 1: sides 3, 4, 5. Triangle 2: sides 6, 8, ? (missing side C)",
+      "inputs": {
+        "calculationType": "find-missing-side",
+        "side1A": 3,
+        "side1B": 4,
+        "side1C": 5,
+        "side2A": 6,
+        "side2B": 8,
+        "side2C": 0,
+        "missingSide": "C"
+      },
+      "explanation": "Scale factor = 6/3 = 2. Missing side C = 5 × 2 = 10"
+    },
+    {
+      "title": "Find Scale Factor",
+      "description": "Triangle 1: sides 5, 12, 13. Triangle 2: sides 10, 24, 26",
+      "inputs": {
+        "calculationType": "find-scale-factor",
+        "side1A": 5,
+        "side1B": 12,
+        "side1C": 13,
+        "side2A": 10,
+        "side2B": 24,
+        "side2C": 26
+      },
+      "explanation": "Scale factor = 10/5 = 2 (same for all corresponding sides)"
+    },
+    {
+      "title": "Verify Similarity",
+      "description": "Check if triangles with sides 6, 8, 10 and 9, 12, 15 are similar",
+      "inputs": {
+        "calculationType": "verify-similarity",
+        "side1A": 6,
+        "side1B": 8,
+        "side1C": 10,
+        "side2A": 9,
+        "side2B": 12,
+        "side2C": 15
+      },
+      "explanation": "Scale factors: 9/6 = 1.5, 12/8 = 1.5, 15/10 = 1.5. All equal, so triangles are similar."
+    }
+  ],
+  
+  "seo": {
+    "title": "Similar Triangles Calculator | Find Missing Sides & Scale Factors",
+    "metaDescription": "Calculate missing sides and scale factors of similar triangles instantly. Free online similar triangles calculator with step-by-step solutions.",
+    "keywords": [
+      "similar triangles calculator",
+      "missing side calculator",
+      "scale factor calculator",
+      "triangle similarity",
+      "proportion calculator",
+      "geometry calculator",
+      "math calculator",
+      "triangle solver",
+      "similar triangles",
+      "triangle proportions",
+      "geometry solver",
+      "triangle calculator"
+    ]
+  },
+
+  "content": {
+    "howItWorks": {
+      "title": "How to Calculate Similar Triangles",
+      "description": "Similar triangles have the same shape but different sizes. Their corresponding sides are proportional, and corresponding angles are equal.",
+      "formulas": [
+        { "concept": "Scale Factor", "formula": "k = side₂/side₁", "description": "Where k is the scale factor between corresponding sides" },
+        { "concept": "Missing Side", "formula": "missing_side = known_side × scale_factor", "description": "Use proportion to find unknown side length" },
+        { "concept": "Similarity Check", "formula": "a₁/a₂ = b₁/b₂ = c₁/c₂", "description": "All ratios must be equal for triangles to be similar" }
+      ]
+    },
+    "useCases": [
+      {
+        "title": "Architecture & Construction",
+        "description": "Calculate dimensions for scaled models, blueprints, and proportional structures in building design."
+      },
+      {
+        "title": "Map Reading & Navigation",
+        "description": "Determine actual distances from map measurements using scale factors and similar triangle principles."
+      },
+      {
+        "title": "Photography & Art",
+        "description": "Calculate proportions for scaling images, maintaining aspect ratios, and creating proportional artwork."
+      },
+      {
+        "title": "Education & Learning",
+        "description": "Solve geometry problems involving similar triangles, proportions, and scale factors in mathematics."
+      }
+    ],
+    "tips": [
+      "Similar triangles have equal corresponding angles and proportional corresponding sides",
+      "The scale factor is the ratio of any pair of corresponding sides",
+      "All corresponding sides must have the same scale factor for triangles to be similar",
+      "When finding missing sides, use the scale factor from known corresponding sides",
+      "Always check that the scale factor is consistent across all corresponding sides",
+      "Remember that similar triangles maintain their shape but change size proportionally"
+    ],
+    "examples": [
+      {
+        "title": "Building Model",
+        "scenario": "A model building is 1/100th the size of the actual building. If the model's height is 2 feet, what is the actual height?",
+        "calculation": "Scale factor = 100. Actual height = 2 × 100 = 200 feet",
+        "result": "The actual building height is 200 feet"
+      },
+      {
+        "title": "Map Distance",
+        "scenario": "On a map with scale 1:50000, two cities are 3 cm apart. What is the actual distance?",
+        "calculation": "Scale factor = 50000. Actual distance = 3 × 50000 = 150000 cm = 1.5 km",
+        "result": "The actual distance between cities is 1.5 kilometers"
+      }
+    ]
+  },
+
+  "relatedCalculators": [
+    {
+      "name": "Triangle Calculator",
+      "slug": "triangle-calculator",
+      "category": "math"
+    },
+    {
+      "name": "Pythagorean Theorem Calculator",
+      "slug": "pythagorean-calculator",
+      "category": "math"
+    },
+    {
+      "name": "Area Calculator",
+      "slug": "area-calculator",
+      "category": "math"
+    }
+  ],
+  
+  "pSEODataset": "/datasets/math/similar-triangles-data.csv"
+}
