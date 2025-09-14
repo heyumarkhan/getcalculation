@@ -37,6 +37,50 @@ const legacyCalculationLibrary = new Map([
       const result = decimal * 100;
       return { percent: result };
     }
+  ],
+  [
+    'STANDARD_FORM_TO_SLOPE_INTERCEPT',
+    (inputs) => {
+      // Extract coefficients from section-based or flat structure
+      let A, B, C;
+      if (inputs['equation-coefficients']) {
+        const coefficients = inputs['equation-coefficients'];
+        A = coefficients.A;
+        B = coefficients.B;
+        C = coefficients.C;
+      } else {
+        A = inputs.A;
+        B = inputs.B;
+        C = inputs.C;
+      }
+
+      // Validate inputs
+      if (!A && A !== 0 || !B && B !== 0 || !C && C !== 0) {
+        return { error: 'All coefficients (A, B, C) must be provided.' };
+      }
+      if (B === 0) {
+        return { error: 'Coefficient B cannot be zero (would create a vertical line).' };
+      }
+
+      // Calculate slope-intercept form
+      const slope = -A / B;
+      const yIntercept = C / B;
+      const xIntercept = A !== 0 ? C / A : null;
+
+      // Format equations
+      const standardFormEquation = `${A === 1 ? '' : A === -1 ? '-' : A}x ${B > 0 ? '+' : ''} ${B === 1 ? '' : B === -1 ? '-' : B}y = ${C}`;
+      const slopeInterceptEquation = `y = ${slope === 1 ? '' : slope === -1 ? '-' : slope}x ${yIntercept >= 0 ? '+' : ''} ${yIntercept}`;
+
+      return {
+        slope: Math.round(slope * 1000000) / 1000000,
+        yIntercept: Math.round(yIntercept * 1000000) / 1000000,
+        xIntercept: xIntercept !== null ? Math.round(xIntercept * 1000000) / 1000000 : null,
+        standardFormEquation: standardFormEquation.replace(/\s+/g, ' ').replace(/^\s|\s$/g, ''),
+        slopeInterceptEquation: slopeInterceptEquation.replace(/\s+/g, ' ').replace(/^\s|\s$/g, ''),
+        isVerticalLine: false,
+        isHorizontalLine: A === 0
+      };
+    }
   ]
 ]);
 

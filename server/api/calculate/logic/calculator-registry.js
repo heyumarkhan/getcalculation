@@ -5,7 +5,7 @@
 
 import { promises as fs } from 'fs';
 import path from 'path';
-import { fileURLToPath } from 'url';
+import { fileURLToPath, pathToFileURL } from 'url';
 
 // Get current directory for ES modules
 const __filename = fileURLToPath(import.meta.url);
@@ -40,7 +40,44 @@ export class CalculatorRegistry {
    * Scan for calculator modules in the logic directory
    */
   async scanCalculatorModules() {
-    const logicDir = __dirname;
+    let logicDir = __dirname;
+    
+    // In Nuxt build, try alternative paths if the primary doesn't work
+    const alternativePaths = [
+      __dirname,
+      path.join(process.cwd(), 'server/api/calculate/logic'),
+      path.join(process.cwd(), '.nuxt/dist/server/api/calculate/logic'),
+      path.resolve(__dirname)
+    ];
+    
+    console.log(`Trying to find logic directory...`);
+    console.log(`__dirname: ${__dirname}`);
+    console.log(`process.cwd(): ${process.cwd()}`);
+    
+    for (const dir of alternativePaths) {
+      try {
+        console.log(`Checking path: ${dir}`);
+        const stat = await fs.stat(dir);
+        if (stat.isDirectory()) {
+          // Check if it contains calculator files
+          const items = await fs.readdir(dir);
+          const hasCalculators = items.some(item => 
+            item.endsWith('.js') && 
+            !item.includes('base') && 
+            !item.includes('registry')
+          );
+          console.log(`Path ${dir} exists, has calculators: ${hasCalculators}`);
+          if (hasCalculators) {
+            logicDir = dir;
+            break;
+          }
+        }
+      } catch (error) {
+        console.log(`Path ${dir} not accessible: ${error.message}`);
+      }
+    }
+    
+    console.log(`Using logic directory: ${logicDir}`);
     await this.scanDirectory(logicDir);
   }
 
@@ -50,10 +87,13 @@ export class CalculatorRegistry {
    */
   async scanDirectory(dir) {
     try {
+      console.log(`Scanning directory: ${dir}`);
       const items = await fs.readdir(dir, { withFileTypes: true });
+      console.log(`Found ${items.length} items in ${dir}`);
       
       for (const item of items) {
         const fullPath = path.join(dir, item.name);
+        console.log(`Processing: ${item.name} (isFile: ${item.isFile()}, isDirectory: ${item.isDirectory()})`);
         
         if (item.isDirectory() && !item.name.startsWith('.')) {
           // Skip base files and utils
@@ -61,6 +101,7 @@ export class CalculatorRegistry {
             await this.scanDirectory(fullPath);
           }
         } else if (item.isFile() && item.name.endsWith('.js') && !item.name.includes('base') && !item.name.includes('registry')) {
+          console.log(`Registering calculator file: ${fullPath}`);
           await this.registerCalculatorFile(fullPath);
         }
       }
@@ -127,7 +168,9 @@ export class CalculatorRegistry {
     // Lazy load the module if not already loaded
     if (!calculatorInfo.loaded) {
       try {
-        const module = await import(calculatorInfo.path);
+        // Convert file path to proper file:// URL for Windows compatibility
+        const moduleURL = pathToFileURL(calculatorInfo.path);
+        const module = await import(moduleURL);
         calculatorInfo.module = module;
         calculatorInfo.loaded = true;
         

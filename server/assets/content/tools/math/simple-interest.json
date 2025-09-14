@@ -88,5 +88,79 @@
     }
   ],
   
+  "seo": {
+    "dataset": "/datasets/math/simple-interest-data.csv",
+    "keywords": ["simple interest calculator", "loan interest", "principal amount", "interest rate", "time period calculation", "financial calculator", "investment returns"],
+    "metaDescription": "Calculate simple interest on loans and investments. Free online calculator with flexible time units (years, months, weeks, days).",
+    "scenarios": [
+      "personal-loan",
+      "savings-calculation", 
+      "investment-planning",
+      "student-loan",
+      "business-loan"
+    ]
+  },
+  
+  "content": {
+    "howItWorks": {
+      "title": "How Simple Interest Works",
+      "description": "Simple interest is calculated using the formula: Interest = Principal × Rate × Time. Unlike compound interest, simple interest doesn't earn interest on previously accumulated interest.",
+      "formula": "I = P × R × T",
+      "variables": [
+        { "symbol": "I", "name": "Interest", "description": "The amount of interest earned or paid" },
+        { "symbol": "P", "name": "Principal", "description": "The initial amount of money" },
+        { "symbol": "R", "name": "Rate", "description": "The annual interest rate (as a decimal)" },
+        { "symbol": "T", "name": "Time", "description": "The time period in years" }
+      ]
+    },
+    "useCases": [
+      {
+        "title": "Personal Loans",
+        "description": "Calculate the total interest you'll pay on a personal loan with simple interest."
+      },
+      {
+        "title": "Savings Goals",
+        "description": "Determine how much interest your savings will earn over time."
+      },
+      {
+        "title": "Investment Planning",
+        "description": "Estimate returns on investments that use simple interest calculations."
+      },
+      {
+        "title": "Educational Purposes",
+        "description": "Learn and understand the fundamentals of interest calculations."
+      }
+    ],
+    "tips": [
+      "Simple interest is linear - it grows at a constant rate over time",
+      "Most modern loans use compound interest, not simple interest",
+      "Simple interest is easier to calculate manually than compound interest",
+      "The time period affects the total interest more than small changes in rate"
+    ],
+    "examples": [
+      {
+        "title": "Basic Loan Example",
+        "scenario": "You borrow $1,000 at 5% annual simple interest for 2 years",
+        "calculation": "Interest = $1,000 × 0.05 × 2 = $100",
+        "result": "Total amount to repay: $1,100"
+      },
+      {
+        "title": "Short-term Investment",
+        "scenario": "You invest $5,000 at 3% annual simple interest for 6 months",
+        "calculation": "Interest = $5,000 × 0.03 × 0.5 = $75",
+        "result": "Total value after 6 months: $5,075"
+      }
+    ]
+  },
+  
+  "features": {
+    "unitConversion": true,
+    "flexibleTimeUnits": true,
+    "realTimeCalculation": true,
+    "mobileOptimized": true,
+    "exportResults": false,
+    "comparisonMode": false
+  },
+  
   "pSEODataset": "/datasets/math/simple-interest-data.csv"
 }

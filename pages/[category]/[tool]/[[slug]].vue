@@ -16,6 +16,58 @@ if (error.value) {
   throw createError({ statusCode: 404, statusMessage: 'Calculator not found', fatal: true });
 }
 
+// SEO Meta Tags
+useHead(() => {
+  if (!manifest.value) return {};
+  
+  const seo = manifest.value.seo || {};
+  const content = manifest.value.content || {};
+  
+  return {
+    title: `${manifest.value.toolName} - Free Online Calculator`,
+    meta: [
+      {
+        name: 'description',
+        content: seo.metaDescription || manifest.value.description
+      },
+      {
+        name: 'keywords',
+        content: seo.keywords ? seo.keywords.join(', ') : ''
+      },
+      {
+        property: 'og:title',
+        content: `${manifest.value.toolName} - Free Online Calculator`
+      },
+      {
+        property: 'og:description',
+        content: seo.metaDescription || manifest.value.description
+      },
+      {
+        property: 'og:type',
+        content: 'website'
+      },
+      {
+        name: 'twitter:card',
+        content: 'summary'
+      },
+      {
+        name: 'twitter:title',
+        content: `${manifest.value.toolName} - Free Online Calculator`
+      },
+      {
+        name: 'twitter:description',
+        content: seo.metaDescription || manifest.value.description
+      }
+    ],
+    link: [
+      {
+        rel: 'canonical',
+        href: `https://yoursite.com/${category}/${tool}`
+      }
+    ]
+  };
+});
+
 onMounted(() => {
   if (manifest.value && slug && calculatorFormRef.value) {
     const parsedParams = {};
@@ -126,6 +178,83 @@ const getCategoryBadgeClass = (categorySlug) => {
       <main class="max-w-4xl mx-auto px-4">
         <CalculatorForm ref="calculatorFormRef" :manifest="manifest" />
       </main>
+
+      <!-- Educational Content Section -->
+      <section v-if="manifest.content" class="max-w-4xl mx-auto px-4 mt-16">
+        <!-- How It Works -->
+        <div v-if="manifest.content.howItWorks" class="card p-8 mb-8">
+          <h2 class="text-2xl font-bold text-primary-900 mb-4">
+            {{ manifest.content.howItWorks.title }}
+          </h2>
+          <p class="text-neutral-700 mb-6 leading-relaxed">
+            {{ manifest.content.howItWorks.description }}
+          </p>
+          
+          <!-- Formula Display -->
+          <div v-if="manifest.content.howItWorks.formula" class="bg-accent-50 rounded-lg p-6 mb-6">
+            <h3 class="text-lg font-semibold text-accent-800 mb-3">Formula</h3>
+            <div class="text-2xl font-mono text-accent-700 mb-4">
+              {{ manifest.content.howItWorks.formula }}
+            </div>
+            
+            <!-- Variables -->
+            <div v-if="manifest.content.howItWorks.variables" class="space-y-2">
+              <h4 class="text-sm font-medium text-accent-800 mb-2">Where:</h4>
+              <div v-for="variable in manifest.content.howItWorks.variables" :key="variable.symbol" 
+                   class="flex items-start space-x-3">
+                <span class="font-mono font-bold text-accent-700 min-w-[20px]">{{ variable.symbol }}</span>
+                <span class="text-sm text-neutral-700">
+                  <strong>{{ variable.name }}:</strong> {{ variable.description }}
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Use Cases -->
+        <div v-if="manifest.content.useCases" class="card p-8 mb-8">
+          <h2 class="text-2xl font-bold text-primary-900 mb-6">When to Use This Calculator</h2>
+          <div class="grid md:grid-cols-2 gap-6">
+            <div v-for="useCase in manifest.content.useCases" :key="useCase.title" 
+                 class="bg-neutral-50 rounded-lg p-6">
+              <h3 class="text-lg font-semibold text-primary-800 mb-3">{{ useCase.title }}</h3>
+              <p class="text-neutral-700">{{ useCase.description }}</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Examples -->
+        <div v-if="manifest.content.examples" class="card p-8 mb-8">
+          <h2 class="text-2xl font-bold text-primary-900 mb-6">Examples</h2>
+          <div class="space-y-6">
+            <div v-for="example in manifest.content.examples" :key="example.title" 
+                 class="border border-neutral-200 rounded-lg p-6">
+              <h3 class="text-lg font-semibold text-primary-800 mb-3">{{ example.title }}</h3>
+              <div class="space-y-3">
+                <p class="text-neutral-700"><strong>Scenario:</strong> {{ example.scenario }}</p>
+                <p class="text-neutral-700"><strong>Calculation:</strong> 
+                   <code class="bg-neutral-100 px-2 py-1 rounded text-sm font-mono">{{ example.calculation }}</code>
+                </p>
+                <p class="text-accent-700 font-semibold">{{ example.result }}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tips -->
+        <div v-if="manifest.content.tips" class="card p-8 mb-8">
+          <h2 class="text-2xl font-bold text-primary-900 mb-6">Tips & Things to Know</h2>
+          <div class="space-y-3">
+            <div v-for="tip in manifest.content.tips" :key="tip" 
+                 class="flex items-start space-x-3">
+              <svg class="w-5 h-5 text-accent-500 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
+              </svg>
+              <p class="text-neutral-700">{{ tip }}</p>
+            </div>
+          </div>
+        </div>
+      </section>
 
       <!-- Footer Info -->
       <footer class="max-w-4xl mx-auto px-4 mt-16 pb-12">
