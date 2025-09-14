@@ -42,19 +42,19 @@ const getCategoryIcon = (categorySlug) => {
 
 const getCategoryIconClass = (categorySlug) => {
   const classes = {
-    math: 'bg-math-100 text-math-700',
-    physics: 'bg-physics-100 text-physics-700',
-    chemistry: 'bg-chemistry-100 text-chemistry-700',
-    finance: 'bg-finance-100 text-finance-700',
-    biology: 'bg-green-100 text-green-700',
-    engineering: 'bg-blue-100 text-blue-700'
+    math: 'bg-math-100 dark:bg-math-900 text-math-700 dark:text-math-300',
+    physics: 'bg-physics-100 dark:bg-physics-900 text-physics-700 dark:text-physics-300',
+    chemistry: 'bg-chemistry-100 dark:bg-chemistry-900 text-chemistry-700 dark:text-chemistry-300',
+    finance: 'bg-finance-100 dark:bg-finance-900 text-finance-700 dark:text-finance-300',
+    biology: 'bg-green-100 dark:bg-green-900 text-green-700 dark:text-green-300',
+    engineering: 'bg-blue-100 dark:bg-blue-900 text-blue-700 dark:text-blue-300'
   };
-  return classes[categorySlug] || 'bg-neutral-100 text-neutral-700';
+  return classes[categorySlug] || 'bg-neutral-100 dark:bg-neutral-800 text-neutral-700 dark:text-neutral-300';
 };
 </script>
 
 <template>
-  <div class="min-h-screen bg-neutral-50">
+  <div class="min-h-screen bg-neutral-50 dark:bg-neutral-900">
     <!-- Hero Section -->
     <header class="hero bg-gradient-primary text-white py-20 px-4">
       <div class="max-w-4xl mx-auto text-center">
@@ -80,10 +80,10 @@ const getCategoryIconClass = (categorySlug) => {
       <!-- Search Results -->
       <section v-if="searchQuery" class="animate-fade-in">
         <div class="mb-8">
-          <h2 class="text-3xl font-semibold text-primary-800 mb-2">
+          <h2 class="text-3xl font-semibold text-primary-800 dark:text-primary-200 mb-2">
             Search Results Are:
           </h2>
-          <p class="text-neutral-600">
+          <p class="text-neutral-600 dark:text-neutral-400">
             Found {{ filteredTools.length }} calculator{{ filteredTools.length !== 1 ? 's' : '' }} for "{{ searchQuery }}"
           </p>
         </div>
@@ -99,10 +99,10 @@ const getCategoryIconClass = (categorySlug) => {
         
         <div v-else class="text-center py-16">
           <div class="text-6xl mb-4">🔍</div>
-          <h3 class="text-xl font-semibold text-neutral-700 mb-2">
+          <h3 class="text-xl font-semibold text-neutral-700 dark:text-neutral-300 mb-2">
             No calculators found
           </h3>
-          <p class="text-neutral-500">
+          <p class="text-neutral-500 dark:text-neutral-400">
             Try searching with different keywords or browse our categories below.
           </p>
         </div>
@@ -111,10 +111,10 @@ const getCategoryIconClass = (categorySlug) => {
       <!-- Categories -->
       <section v-else class="animate-fade-in">
         <div class="text-center mb-16">
-          <h2 class="text-4xl font-bold text-primary-900 mb-4">
+          <h2 class="text-4xl font-bold text-primary-900 dark:text-primary-100 mb-4">
             All Categories
           </h2>
-          <p class="text-xl text-neutral-600 max-w-2xl mx-auto">
+          <p class="text-xl text-neutral-600 dark:text-neutral-400 max-w-2xl mx-auto">
             Explore our collection of calculators organized by subject area
           </p>
         </div>
@@ -131,10 +131,10 @@ const getCategoryIconClass = (categorySlug) => {
                    :class="getCategoryIconClass(category.slug)">
                 {{ getCategoryIcon(category.slug) }}
               </div>
-              <h3 class="text-2xl font-semibold text-primary-800 mb-3 group-hover:text-accent-600 transition-colors">
+              <h3 class="text-2xl font-semibold text-primary-800 dark:text-primary-200 mb-3 group-hover:text-accent-600 transition-colors">
                 {{ category.name }}
               </h3>
-              <p class="text-neutral-600 leading-relaxed">
+              <p class="text-neutral-600 dark:text-neutral-400 leading-relaxed">
                 {{ category.description }}
               </p>
             </div>

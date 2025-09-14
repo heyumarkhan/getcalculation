@@ -23,17 +23,17 @@ if (error.value) {
 </script>
 
 <template>
-  <div class="category-page">
-    <header v-if="categoryDetails">
-      <h1>{{ categoryDetails.name }}</h1>
-      <p>{{ categoryDetails.description }}</p>
+  <div class="category-page min-h-screen bg-neutral-50 dark:bg-neutral-900">
+    <header v-if="categoryDetails" class="text-center py-12 px-4">
+      <h1 class="text-4xl font-bold text-primary-900 dark:text-primary-100 mb-4">{{ categoryDetails.name }}</h1>
+      <p class="text-xl text-neutral-600 dark:text-neutral-400 max-w-2xl mx-auto">{{ categoryDetails.description }}</p>
     </header>
-    <hr />
+    <hr class="border-neutral-200 dark:border-neutral-700" />
     <div v-if="tools && tools.length > 0" class="card-grid">
       <ToolCard v-for="tool in tools" :key="tool.toolSlug" :tool="tool" />
     </div>
-    <div v-else>
-      <p>No tools found in this category yet.</p>
+    <div v-else class="text-center py-16">
+      <p class="text-lg text-neutral-600 dark:text-neutral-400">No tools found in this category yet.</p>
     </div>
   </div>
 </template>

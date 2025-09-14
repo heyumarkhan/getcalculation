@@ -21,14 +21,14 @@ const getCategoryIcon = (categorySlug) => {
 
 const getCategoryIconClass = (categorySlug) => {
   const classes = {
-    math: 'bg-math-100 text-math-700',
-    physics: 'bg-physics-100 text-physics-700',
-    chemistry: 'bg-chemistry-100 text-chemistry-700',
-    finance: 'bg-finance-100 text-finance-700',
-    biology: 'bg-green-100 text-green-700',
-    engineering: 'bg-blue-100 text-blue-700'
+    math: 'bg-math-100 dark:bg-math-900 text-math-700 dark:text-math-300',
+    physics: 'bg-physics-100 dark:bg-physics-900 text-physics-700 dark:text-physics-300',
+    chemistry: 'bg-chemistry-100 dark:bg-chemistry-900 text-chemistry-700 dark:text-chemistry-300',
+    finance: 'bg-finance-100 dark:bg-finance-900 text-finance-700 dark:text-finance-300',
+    biology: 'bg-green-100 dark:bg-green-900 text-green-700 dark:text-green-300',
+    engineering: 'bg-blue-100 dark:bg-blue-900 text-blue-700 dark:text-blue-300'
   };
-  return classes[categorySlug] || 'bg-neutral-100 text-neutral-700';
+  return classes[categorySlug] || 'bg-neutral-100 dark:bg-neutral-800 text-neutral-700 dark:text-neutral-300';
 };
 
 const getCategoryBadgeClass = (categorySlug) => {
@@ -61,10 +61,10 @@ const getCategoryBadgeClass = (categorySlug) => {
     </div>
     
     <div class="flex-1">
-      <h3 class="text-xl font-semibold text-primary-800 mb-3 group-hover:text-accent-600 transition-colors">
+      <h3 class="text-xl font-semibold text-primary-800 dark:text-primary-200 mb-3 group-hover:text-accent-600 transition-colors">
         {{ tool.toolName }}
       </h3>
-      <p class="text-neutral-600 leading-relaxed mb-4">
+      <p class="text-neutral-600 dark:text-neutral-400 leading-relaxed mb-4">
         {{ tool.description }}
       </p>
     </div>

@@ -299,8 +299,8 @@ defineExpose({
         >
           <!-- Section Header -->
           <div class="section-header mb-4">
-            <h3 class="text-lg font-semibold text-gray-900">{{ section.title }}</h3>
-            <p v-if="section.description" class="text-sm text-gray-600 mt-1">{{ section.description }}</p>
+            <h3 class="text-lg font-semibold text-gray-900 dark:text-gray-100">{{ section.title }}</h3>
+            <p v-if="section.description" class="text-sm text-gray-600 dark:text-gray-400 mt-1">{{ section.description }}</p>
           </div>
           
           <!-- Section Fields -->
@@ -359,8 +359,8 @@ defineExpose({
                   :value="formState[field.name]"
                   class="form-input"
                   :class="{ 
-                    'border-red-300 focus:border-red-500 focus:ring-red-500': fieldErrors[field.name],
-                    'border-green-300 focus:border-green-500 focus:ring-green-500': !fieldErrors[field.name] && formState[field.name]
+                    'border-red-300 dark:border-red-600 focus:border-red-500 focus:ring-red-500': fieldErrors[field.name],
+                    'border-green-300 dark:border-green-600 focus:border-green-500 focus:ring-green-500': !fieldErrors[field.name] && formState[field.name]
                   }"
                   @change="handleFieldInput(field.name, $event.target.value, field)"
                   @blur="handleFieldBlur(field.name, $event.target.value, field)"
@@ -387,8 +387,8 @@ defineExpose({
                   :step="field.step"
                   class="form-input"
                   :class="{ 
-                    'border-red-300 focus:border-red-500 focus:ring-red-500': fieldErrors[field.name],
-                    'border-green-300 focus:border-green-500 focus:ring-green-500': !fieldErrors[field.name] && formState[field.name]
+                    'border-red-300 dark:border-red-600 focus:border-red-500 focus:ring-red-500': fieldErrors[field.name],
+                    'border-green-300 dark:border-green-600 focus:border-green-500 focus:ring-green-500': !fieldErrors[field.name] && formState[field.name]
                   }"
                   @input="handleFieldInput(field.name, $event.target.value, field)"
                   @blur="handleFieldBlur(field.name, $event.target.value, field)"
@@ -439,7 +439,7 @@ defineExpose({
       <div v-if="isLoading" class="text-center py-8">
         <div class="inline-flex items-center space-x-3">
           <div class="animate-spin rounded-full h-6 w-6 border-2 border-accent-500 border-t-transparent"></div>
-          <span class="text-lg font-medium text-neutral-700">Calculating...</span>
+          <span class="text-lg font-medium text-neutral-700 dark:text-neutral-300">Calculating...</span>
         </div>
       </div>
 
@@ -500,8 +500,8 @@ defineExpose({
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z"></path>
           </svg>
         </div>
-        <h3 class="text-lg font-medium text-neutral-700 mb-2">Ready to Calculate</h3>
-        <p class="text-neutral-500">Enter values above to see the result.</p>
+        <h3 class="text-lg font-medium text-neutral-700 dark:text-neutral-300 mb-2">Ready to Calculate</h3>
+        <p class="text-neutral-500 dark:text-neutral-400">Enter values above to see the result.</p>
       </div>
     </div>
   </div>
@@ -521,11 +521,11 @@ defineExpose({
 }
 
 .section-group {
-  @apply bg-white rounded-lg p-6 border border-gray-200 shadow-sm;
+  @apply bg-white dark:bg-neutral-800 rounded-lg p-6 border border-gray-200 dark:border-neutral-700 shadow-sm;
 }
 
 .section-header h3 {
-  @apply text-lg font-semibold text-gray-900;
+  @apply text-lg font-semibold text-gray-900 dark:text-gray-100;
 }
 
 .form-group {
