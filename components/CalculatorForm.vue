@@ -123,7 +123,7 @@ function setFormState(newValues) {
 }
 
 function formatOutputValue(value, output) {
-  if (value === undefined || value === null) {
+  if (value === undefined || value === null || value === '') {
     return 'N/A';
   }
   
@@ -135,6 +135,8 @@ function formatOutputValue(value, output) {
     // Default number formatting if type not specified
     const precision = output?.precision !== undefined ? output.precision : 2;
     return value.toFixed(precision);
+  } else if (typeof value === 'string' && value.trim() === '') {
+    return 'N/A';
   } else {
     // For strings and other types, return as-is
     return String(value);

@@ -60,6 +60,11 @@
             "default": "year",
             "allowCustom": false
           },
+          "ui": {
+            "position": "right",
+            "display": "unit-selector",
+            "showSymbol": true
+          },
           "validation": {
             "min": 0,
             "message": "Time period must be greater than 0"
