@@ -22,12 +22,54 @@ export default defineEventHandler(async (event) => {
     // Debug: Log available calculators
     await calculatorRegistry.initialize();
     
-    // Manually register similar triangles calculator if not found
-    if (logicKey === 'SIMILAR_TRIANGLES_CALCULATOR' && !calculatorRegistry.hasCalculator(logicKey)) {
+    // Manually register calculators if not found (fallback for production)
+    if (!calculatorRegistry.hasCalculator(logicKey)) {
       try {
-        const { calculate: similarTrianglesCalculate } = await import('../logic/similar-triangles-calculator.js');
-        calculatorRegistry.registerFunction(logicKey, similarTrianglesCalculate);
-        console.log(`✅ Manually registered ${logicKey} in registry`);
+        let calculatorModule;
+        switch (logicKey) {
+          case 'DECIMAL_TO_PERCENT':
+            calculatorModule = await import('../logic/decimal-to-percent.js');
+            break;
+          case 'SIMPLE_INTEREST':
+            calculatorModule = await import('../logic/simple-interest.js');
+            break;
+          case 'MORTGAGE_CALCULATOR':
+            calculatorModule = await import('../logic/mortgage-calculator.js');
+            break;
+          case 'MIDPOINT':
+            calculatorModule = await import('../logic/midpoint.js');
+            break;
+          case 'SLOPE_CALCULATOR':
+            calculatorModule = await import('../logic/slope-calculator.js');
+            break;
+          case 'LENGTH_OF_A_LINE_SEGMENT':
+            calculatorModule = await import('../logic/length-of-a-line-segment.js');
+            break;
+          case 'PARABOLA_CALCULATOR':
+            calculatorModule = await import('../logic/parabola-calculator.js');
+            break;
+          case 'PERIMETER_CALCULATOR':
+            calculatorModule = await import('../logic/perimeter-calculator.js');
+            break;
+          case 'VOLUME_CALCULATOR':
+            calculatorModule = await import('../logic/volume-calculator.js');
+            break;
+          case 'SIMILAR_TRIANGLES_CALCULATOR':
+            calculatorModule = await import('../logic/similar-triangles-calculator.js');
+            break;
+          case 'STANDARD_FORM_TO_SLOPE_INTERCEPT':
+            calculatorModule = await import('../logic/standard-form-to-slope-intercept.js');
+            break;
+          default:
+            throw new Error(`Unknown calculator: ${logicKey}`);
+        }
+        
+        if (calculatorModule && calculatorModule.calculate) {
+          calculatorRegistry.registerFunction(logicKey, calculatorModule.calculate);
+          console.log(`✅ Manually registered ${logicKey} in registry`);
+        } else {
+          throw new Error(`No calculate function found in ${logicKey} module`);
+        }
       } catch (importError) {
         console.warn(`Failed to manually register ${logicKey}:`, importError.message);
       }
