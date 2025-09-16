@@ -5,6 +5,10 @@
 [build.environment]
   NODE_VERSION = "20"
 
+# Serverless functions configuration
+[functions]
+  directory = ".output/server"
+
 # Handle all routes through Nuxt
 [[redirects]]
   from = "/*"
