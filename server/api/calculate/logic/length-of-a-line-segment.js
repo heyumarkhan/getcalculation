@@ -6,8 +6,8 @@
 import { BaseCalculator } from './base-calculator.js';
 
 export class LengthOfALineSegmentCalculator extends BaseCalculator {
-  constructor(inputs, manifest) {
-    super(inputs, manifest);
+  constructor() {
+    super("LENGTH_OF_A_LINE_SEGMENT", "Length of Line Segment Calculator");
   }
 
   /**
@@ -179,7 +179,7 @@ export class LengthOfALineSegmentCalculator extends BaseCalculator {
  */
 export function calculate(inputs, manifest) {
   const calculator = new LengthOfALineSegmentCalculator(inputs, manifest);
-  return calculator.execute();
+  return calculator.calculate(inputs, manifest);
 }
 
 export default calculate;
