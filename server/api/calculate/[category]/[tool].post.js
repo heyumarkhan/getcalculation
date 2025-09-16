@@ -694,6 +694,18 @@ export default defineEventHandler(async (event) => {
   try {
     // Debug: Log available calculators
     await calculatorRegistry.initialize();
+    
+    // Manually register similar triangles calculator if not found
+    if (logicKey === 'SIMILAR_TRIANGLES_CALCULATOR' && !calculatorRegistry.hasCalculator(logicKey)) {
+      try {
+        const { calculate: similarTrianglesCalculate } = await import('../logic/similar-triangles-calculator.js');
+        calculatorRegistry.registerFunction(logicKey, similarTrianglesCalculate);
+        console.log(`✅ Manually registered ${logicKey} in registry`);
+      } catch (importError) {
+        console.warn(`Failed to manually register ${logicKey}:`, importError.message);
+      }
+    }
+    
     const availableCalculators = calculatorRegistry.getAvailableCalculators();
     console.log(`Available calculators in registry: ${availableCalculators.join(', ')}`);
     console.log(`Looking for calculator: ${logicKey}`);
