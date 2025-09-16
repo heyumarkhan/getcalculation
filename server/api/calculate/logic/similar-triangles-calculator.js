@@ -6,40 +6,43 @@
 import { BaseCalculator } from './base-calculator.js';
 
 export class SimilarTrianglesCalculator extends BaseCalculator {
-  constructor(inputs, manifest) {
-    super(inputs, manifest);
+  constructor() {
+    super('SIMILAR_TRIANGLES_CALCULATOR', 'Similar Triangles Calculator');
   }
 
   /**
-   * Validate inputs for similar triangles calculation
-   * @returns {object} Validation result
+   * Calculate similar triangles
+   * @param {object} inputs - Input values
+   * @param {object} manifest - Calculator manifest
+   * @returns {object} Calculation results
    */
-  validateInputs() {
-    const result = super.validateInputs();
-    if (!result) return { valid: false, error: this.errors.join(', ') };
+  calculate(inputs, manifest) {
+    try {
+      // Extract calculation type
+      let calculationType;
+      if (inputs['triangle-type']) {
+        calculationType = inputs['triangle-type'].calculationType;
+      } else {
+        calculationType = inputs.calculationType;
+      }
 
-    // Extract calculation type
-    let calculationType;
-    if (this.inputs['triangle-type']) {
-      calculationType = this.inputs['triangle-type'].calculationType;
-    } else {
-      calculationType = this.inputs.calculationType;
-    }
+      if (!calculationType) {
+        return { error: 'Calculation type must be specified' };
+      }
 
-    if (!calculationType) {
-      return { valid: false, error: 'Calculation type must be specified' };
-    }
-
-    // Validate based on calculation type
-    switch (calculationType) {
-      case 'find-missing-side':
-        return this.validateFindMissingSide();
-      case 'find-scale-factor':
-        return this.validateFindScaleFactor();
-      case 'verify-similarity':
-        return this.validateVerifySimilarity();
-      default:
-        return { valid: false, error: 'Unsupported calculation type' };
+      // Calculate based on type
+      switch (calculationType) {
+        case 'find-missing-side':
+          return this.findMissingSide(inputs);
+        case 'find-scale-factor':
+          return this.findScaleFactor(inputs);
+        case 'verify-similarity':
+          return this.verifySimilarity(inputs);
+        default:
+          return { error: 'Unsupported calculation type' };
+      }
+    } catch (error) {
+      return { error: `Calculation error: ${error.message}` };
     }
   }
 
@@ -410,8 +413,8 @@ export class SimilarTrianglesCalculator extends BaseCalculator {
  * Calculate function for the calculator registry
  */
 export function calculate(inputs, manifest) {
-  const calculator = new SimilarTrianglesCalculator(inputs, manifest);
-  return calculator.execute();
+  const calculator = new SimilarTrianglesCalculator();
+  return calculator.calculate(inputs, manifest);
 }
 
 export default calculate;
