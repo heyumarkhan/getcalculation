@@ -665,7 +665,7 @@ const legacyCalculationLibrary = new Map([
     }
   ],
   [
-    'SIMILAR_TRIANGLES',
+    'SIMILAR_TRIANGLES_CALCULATOR',
     (inputs) => {
       // This calculator uses the modular system only
       // The legacy library is empty to force use of the modular calculator
