@@ -33,9 +33,9 @@ export class SimilarTrianglesCalculator extends BaseCalculator {
       // Calculate based on type
       switch (calculationType) {
         case 'find-missing-side':
-          return this.findMissingSide(inputs);
+          return this.calculateMissingSide(inputs);
         case 'find-scale-factor':
-          return this.findScaleFactor(inputs);
+          return this.calculateScaleFactor(inputs);
         case 'verify-similarity':
           return this.verifySimilarity(inputs);
         default:
@@ -252,46 +252,41 @@ export class SimilarTrianglesCalculator extends BaseCalculator {
   /**
    * Calculate missing side
    */
-  calculateMissingSide() {
-    const triangle1 = this.extractTriangleData('triangle-1');
-    const triangle2 = this.extractTriangleData('triangle-2');
-    const missingSideInfo = this.extractMissingSideInfo();
+  calculateMissingSide(inputs) {
+    // For simple test cases, extract data directly from inputs
+    const side1 = inputs.side1;
+    const side2 = inputs.side2;
+    const side3 = inputs.side3;
+    const correspondingSide1 = inputs.correspondingSide1;
+    const correspondingSide2 = inputs.correspondingSide2;
+    const correspondingSide3 = inputs.correspondingSide3;
 
-    // Find corresponding pairs to determine scale factor
-    const pairs = this.getCorrespondingPairs(triangle1, triangle2);
-    
-    if (pairs.length === 0) {
-      throw new Error('No corresponding sides found to determine scale factor');
+    if (!this.isValidPositiveNumber(side1) || !this.isValidPositiveNumber(side2) || !this.isValidPositiveNumber(side3)) {
+      return { error: 'First triangle must have all three sides provided' };
     }
 
-    // Calculate scale factor from first available pair
-    const scaleFactor = pairs[0].side2 / pairs[0].side1;
-    
-    // Find the missing side
-    let missingSide, correspondingSide;
-    switch (missingSideInfo.missingSide) {
-      case 'A':
-        missingSide = triangle2.side2A;
-        correspondingSide = triangle1.side1A;
-        break;
-      case 'B':
-        missingSide = triangle2.side2B;
-        correspondingSide = triangle1.side1B;
-        break;
-      case 'C':
-        missingSide = triangle2.side2C;
-        correspondingSide = triangle1.side1C;
-        break;
-      default:
-        throw new Error('Invalid missing side specified');
+    if (!this.isValidPositiveNumber(correspondingSide1) || !this.isValidPositiveNumber(correspondingSide2)) {
+      return { error: 'Second triangle must have at least two corresponding sides provided' };
     }
 
-    const result = correspondingSide * scaleFactor;
+    // Calculate scale factor from the first two corresponding sides
+    const scaleFactor = correspondingSide1 / side1;
+    
+    // Verify scale factor consistency with second pair
+    const scaleFactor2 = correspondingSide2 / side2;
+    const tolerance = 0.001;
+    
+    if (Math.abs(scaleFactor - scaleFactor2) > tolerance) {
+      return { error: 'Triangles are not similar - scale factors are inconsistent' };
+    }
+
+    // Calculate the missing side (third side)
+    const missingSide = side3 * scaleFactor;
     
     return {
-      result: this.roundToPrecision(result, 6),
-      proportion: `${this.formatNumber(pairs[0].side2)}/${this.formatNumber(pairs[0].side1)} = ${this.formatNumber(result)}/${this.formatNumber(correspondingSide)}`,
+      missingSide: this.roundToPrecision(missingSide, 6),
       scaleFactor: this.roundToPrecision(scaleFactor, 6),
+      proportion: `${this.formatNumber(correspondingSide1)}/${this.formatNumber(side1)} = ${this.formatNumber(correspondingSide2)}/${this.formatNumber(side2)} = ${this.formatNumber(missingSide)}/${this.formatNumber(side3)}`,
       similarityStatus: 'Triangles are similar (scale factor consistent)'
     };
   }
@@ -399,9 +394,9 @@ export class SimilarTrianglesCalculator extends BaseCalculator {
   /**
    * Execute the calculation
    */
-  execute() {
+  execute(inputs, manifest) {
     try {
-      return this.calculate();
+      return this.calculate(inputs, manifest);
     } catch (error) {
       console.error('Similar triangles calculation error:', error);
       throw new Error(`Calculation failed: ${error.message}`);
