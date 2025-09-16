@@ -3,17 +3,18 @@ import { calculatorRegistry } from '../logic/calculator-registry.js';
 
 // This is the main Nuxt server handler. It runs for every request to this API endpoint.
 export default defineEventHandler(async (event) => {
-  // readBody waits for the user's form data to be sent from the frontend.
-  const body = await readBody(event);
+  try {
+    // readBody waits for the user's form data to be sent from the frontend.
+    const body = await readBody(event);
 
-  // Here, we need to know which tool to use. We can't access the file system here directly
-  // for the manifest. Instead, we'll ask the frontend to tell us which logic to use.
-  // We'll add a 'logic' key to the data sent from our form.
-  const logicKey = body.logic;
+    // Here, we need to know which tool to use. We can't access the file system here directly
+    // for the manifest. Instead, we'll ask the frontend to tell us which logic to use.
+    // We'll add a 'logic' key to the data sent from our form.
+    const logicKey = body.logic;
 
-  if (!logicKey) {
-    throw createError({ statusCode: 400, statusMessage: 'Calculation logic key is missing.' });
-  }
+    if (!logicKey) {
+      throw createError({ statusCode: 400, statusMessage: 'Calculation logic key is missing.' });
+    }
 
   // Try to get calculator from registry
   let calculate = null;
@@ -24,45 +25,29 @@ export default defineEventHandler(async (event) => {
     
     // Manually register calculators if not found (fallback for production)
     if (!calculatorRegistry.hasCalculator(logicKey)) {
+      console.log(`⚠️ Calculator ${logicKey} not found in registry, attempting manual registration...`);
       try {
-        let calculatorModule;
-        switch (logicKey) {
-          case 'DECIMAL_TO_PERCENT':
-            calculatorModule = await import('../logic/decimal-to-percent.js');
-            break;
-          case 'SIMPLE_INTEREST':
-            calculatorModule = await import('../logic/simple-interest.js');
-            break;
-          case 'MORTGAGE_CALCULATOR':
-            calculatorModule = await import('../logic/mortgage-calculator.js');
-            break;
-          case 'MIDPOINT':
-            calculatorModule = await import('../logic/midpoint.js');
-            break;
-          case 'SLOPE_CALCULATOR':
-            calculatorModule = await import('../logic/slope-calculator.js');
-            break;
-          case 'LENGTH_OF_A_LINE_SEGMENT':
-            calculatorModule = await import('../logic/length-of-a-line-segment.js');
-            break;
-          case 'PARABOLA_CALCULATOR':
-            calculatorModule = await import('../logic/parabola-calculator.js');
-            break;
-          case 'PERIMETER_CALCULATOR':
-            calculatorModule = await import('../logic/perimeter-calculator.js');
-            break;
-          case 'VOLUME_CALCULATOR':
-            calculatorModule = await import('../logic/volume-calculator.js');
-            break;
-          case 'SIMILAR_TRIANGLES_CALCULATOR':
-            calculatorModule = await import('../logic/similar-triangles-calculator.js');
-            break;
-          case 'STANDARD_FORM_TO_SLOPE_INTERCEPT':
-            calculatorModule = await import('../logic/standard-form-to-slope-intercept.js');
-            break;
-          default:
-            throw new Error(`Unknown calculator: ${logicKey}`);
+        // Create a mapping of calculator keys to their file paths
+        const calculatorMap = {
+          'DECIMAL_TO_PERCENT': '../logic/decimal-to-percent.js',
+          'SIMPLE_INTEREST': '../logic/simple-interest.js',
+          'MORTGAGE_CALCULATOR': '../logic/mortgage-calculator.js',
+          'MIDPOINT': '../logic/midpoint.js',
+          'SLOPE_CALCULATOR': '../logic/slope-calculator.js',
+          'LENGTH_OF_A_LINE_SEGMENT': '../logic/length-of-a-line-segment.js',
+          'PARABOLA_CALCULATOR': '../logic/parabola-calculator.js',
+          'PERIMETER_CALCULATOR': '../logic/perimeter-calculator.js',
+          'VOLUME_CALCULATOR': '../logic/volume-calculator.js',
+          'SIMILAR_TRIANGLES_CALCULATOR': '../logic/similar-triangles-calculator.js',
+          'STANDARD_FORM_TO_SLOPE_INTERCEPT': '../logic/standard-form-to-slope-intercept.js'
+        };
+        
+        const modulePath = calculatorMap[logicKey];
+        if (!modulePath) {
+          throw new Error(`Unknown calculator: ${logicKey}`);
         }
+        
+        const calculatorModule = await import(modulePath);
         
         if (calculatorModule && calculatorModule.calculate) {
           calculatorRegistry.registerFunction(logicKey, calculatorModule.calculate);
@@ -72,6 +57,7 @@ export default defineEventHandler(async (event) => {
         }
       } catch (importError) {
         console.warn(`Failed to manually register ${logicKey}:`, importError.message);
+        // Don't throw here, let it fall through to the error handling below
       }
     }
     
@@ -133,6 +119,17 @@ export default defineEventHandler(async (event) => {
         message: errorMessage,
         logicKey: logicKey,
         errorType: error.name || 'UnknownError'
+      }
+    });
+  }
+  } catch (outerError) {
+    console.error('Outer error in API handler:', outerError);
+    throw createError({ 
+      statusCode: 500, 
+      statusMessage: 'Internal server error',
+      data: {
+        message: 'An unexpected error occurred',
+        errorType: 'InternalError'
       }
     });
   }
