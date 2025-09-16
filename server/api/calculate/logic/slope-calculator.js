@@ -38,6 +38,26 @@ export class SlopeCalculator extends BaseCalculator {
         return { error: 'All coordinates (x₁, y₁, x₂, y₂) must be valid numbers.' };
       }
 
+      // Format points display
+      const formatNumber = (num) => {
+        if (Number.isInteger(num)) return num.toString();
+        return Math.round(num * 1000000) / 1000000;
+      };
+
+      const formatCoordinates = (x, y) => `(${formatNumber(x)}, ${formatNumber(y)})`;
+      const pointsDisplay = `${formatCoordinates(x1, y1)} to ${formatCoordinates(x2, y2)}`;
+
+      function isValidNumber(value) {
+        return typeof value === 'number' && !isNaN(value) && isFinite(value);
+      }
+
+      function findGCD(a, b) {
+        const intA = Math.round(a);
+        const intB = Math.round(b);
+        if (intB === 0) return intA;
+        return findGCD(intB, intA % intB);
+      }
+
       // Calculate rise and run
       const rise = y2 - y1;
       const run = x2 - x1;
@@ -87,26 +107,6 @@ export class SlopeCalculator extends BaseCalculator {
       if (slope !== null) {
         angleInRadians = Math.atan(slope);
         angleInDegrees = angleInRadians * (180 / Math.PI);
-      }
-
-      // Format points display
-      const formatNumber = (num) => {
-        if (Number.isInteger(num)) return num.toString();
-        return Math.round(num * 1000000) / 1000000;
-      };
-
-      const formatCoordinates = (x, y) => `(${formatNumber(x)}, ${formatNumber(y)})`;
-      const pointsDisplay = `${formatCoordinates(x1, y1)} to ${formatCoordinates(x2, y2)}`;
-
-      function isValidNumber(value) {
-        return typeof value === 'number' && !isNaN(value) && isFinite(value);
-      }
-
-      function findGCD(a, b) {
-        const intA = Math.round(a);
-        const intB = Math.round(b);
-        if (intB === 0) return intA;
-        return findGCD(intB, intA % intB);
       }
 
       return {
