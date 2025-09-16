@@ -32,14 +32,6 @@ watch(() => props.manifest, (newManifest) => {
         });
       });
     }
-    // Handle legacy parameters format
-    else if (newManifest.parameters) {
-      newManifest.parameters.forEach(param => {
-        if (!(param.name in formState)) {
-           formState[param.name] = null;
-        }
-      });
-    }
   }
 }, { immediate: true });
 
@@ -90,20 +82,6 @@ async function performCalculation() {
         });
       });
       
-      // For legacy calculators, also provide flat structure
-      if (props.manifest.calculationLogic && ['SIMPLE_INTEREST', 'DECIMAL_TO_PERCENT', 'STANDARD_FORM_TO_SLOPE_INTERCEPT', 'MIDPOINT', 'LENGTH_OF_A_LINE_SEGMENT', 'PARABOLA_CALCULATOR', 'SLOPE_CALCULATOR', 'PERIMETER_CALCULATOR', 'VOLUME_CALCULATOR'].includes(props.manifest.calculationLogic)) {
-        // Create flat structure for legacy calculators
-        const flatInputs = {};
-        props.manifest.sections.forEach(section => {
-          section.fields.forEach(field => {
-            flatInputs[field.name] = formState[field.name];
-            if (field.units) {
-              flatInputs[field.name + 'Unit'] = formState[field.name + 'Unit'];
-            }
-          });
-        });
-        inputs = flatInputs;
-      }
     }
     
     const response = await $fetch(`/api/calculate/${props.manifest.categorySlug}/${props.manifest.toolSlug}`, {
