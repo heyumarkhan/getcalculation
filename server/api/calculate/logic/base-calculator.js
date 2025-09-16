@@ -6,9 +6,22 @@
 import { unitConverter } from '../utils/unit-converter.js';
 
 export class BaseCalculator {
-  constructor(inputs, manifest) {
-    this.inputs = inputs;
-    this.manifest = manifest;
+  constructor(inputsOrKey, manifestOrName) {
+    // Support both old and new constructor patterns
+    if (typeof inputsOrKey === 'string' && typeof manifestOrName === 'string') {
+      // New pattern: super(KEY, NAME)
+      this.key = inputsOrKey;
+      this.name = manifestOrName;
+      this.inputs = null;
+      this.manifest = null;
+    } else {
+      // Old pattern: super(inputs, manifest)
+      this.inputs = inputsOrKey;
+      this.manifest = manifestOrName;
+      this.key = null;
+      this.name = null;
+    }
+    
     this.results = {};
     this.errors = [];
     this.warnings = [];
@@ -20,7 +33,12 @@ export class BaseCalculator {
    * @returns {boolean} - True if all inputs are valid
    */
   validateInputs() {
-    if (!this.manifest || !this.manifest.sections) {
+    // For new pattern calculators, validation is handled in the calculate method
+    if (!this.inputs || !this.manifest) {
+      return true;
+    }
+    
+    if (!this.manifest.sections) {
       // Legacy manifest format - use parameters
       return this.validateLegacyInputs();
     }
@@ -136,7 +154,12 @@ export class BaseCalculator {
   normalizeInputs() {
     const normalized = {};
 
-    if (!this.manifest || !this.manifest.sections) {
+    // For new pattern calculators, return inputs as-is
+    if (!this.inputs || !this.manifest) {
+      return this.inputs || {};
+    }
+
+    if (!this.manifest.sections) {
       // Legacy format - direct conversion
       return this.normalizeLegacyInputs();
     }
