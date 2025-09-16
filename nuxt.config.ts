@@ -14,6 +14,11 @@ export default defineNuxtConfig({
   // Tailwind CSS Configuration
   modules: ['@nuxtjs/tailwindcss'],
   
+  // Nitro Configuration for Netlify
+  nitro: {
+    preset: 'netlify'
+  },
+  
   // App Configuration
   app: {
     head: {
